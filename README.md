@@ -3,14 +3,14 @@ Este documento descreve os requisitos e apresenta uma visão geral do trabalho d
 
 Documento desenvolvido como atividade da monitoria de Victor José de Sousa Koehler.
 
-[tabuleiro]: assets/tabuleiro.png
-[referencia]: assets/referencia.png
-[direcao]: assets/direcao.png
-[casas]: assets/casas.png
-[beta]: assets/beta.png
-[flow]: assets/flow.png
-[bluej]: assets/bluej.png
-[indicadores]: assets/indicadores.png
+[tabuleiro]: doc/assets/tabuleiro.png
+[referencia]: doc/assets/referencia.png
+[direcao]: doc/assets/direcao.png
+[casas]: doc/assets/casas.png
+[beta]: doc/assets/beta.png
+[flow]: doc/assets/flow.png
+[bluej]: doc/assets/bluej.png
+[indicadores]: doc/assets/indicadores.png
 
 
 
