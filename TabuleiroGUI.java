@@ -57,16 +57,16 @@ public class TabuleiroGUI extends JPanel {
             return;
         }
         
-        g.setColor(principal.obterCorPadrão("VERDE"));
+        g.setColor(principal.getCorPadrão("VERDE"));
         g.fillPolygon(new int[] {0, 0, h}, new int[] {0, f, h}, 3);
         
-        g.setColor(principal.obterCorPadrão("VERMELHO"));
+        g.setColor(principal.getCorPadrão("VERMELHO"));
         g.fillPolygon(new int[] {0, f, h}, new int[] {0, 0, h}, 3);
         
-        g.setColor(principal.obterCorPadrão("AMARELO"));
+        g.setColor(principal.getCorPadrão("AMARELO"));
         g.fillPolygon(new int[] {0, f, h}, new int[] {f, f, h}, 3);
         
-        g.setColor(principal.obterCorPadrão("AZUL"));
+        g.setColor(principal.getCorPadrão("AZUL"));
         g.fillPolygon(new int[] {f, f, h}, new int[] {0, f, h}, 3);
 
         g.setColor(Color.GRAY);

@@ -72,7 +72,7 @@ public class Jogo {
         Guarita guarita;
         
         guarita = tabuleiro.getGuarita("VERDE");
-        for (Casa casaGuarita : guarita.obterTodasAsCasas()) {
+        for (Casa casaGuarita : guarita.getTodasAsCasas()) {
             Peca novaPeca = new Peca("VERDE");
             novaPeca.mover(casaGuarita);
         }
@@ -192,7 +192,7 @@ public class Jogo {
 
     /**
      * Retorna o i-ésimo dado deste jogo entre 0 (inclusivo) e N (exclusivo).
-     * Consulte obterQuantidadeDeDados() para verificar o valor de N
+     * Consulte getQuantidadeDeDados() para verificar o valor de N
      * (isto é, a quantidade de dados presentes).
      * @param i Indice do dado.
      * @return O i-ésimo dado deste jogo.
