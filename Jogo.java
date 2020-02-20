@@ -96,17 +96,17 @@ public class Jogo {
             Peca novaPeca = new Peca("AMARELO");
             novaPeca.mover(casaGuarita);
         }
+        
+        Player playerVermelho = new Player(1, guaritaVermelha.getTodasAsCasas(), "VERMELHO");
+        Player playerAzul = new Player(2, guaritaAzul.getTodasAsCasas(), "AZUL");
+        Player playerAmarelo = new Player(3, guaritaAmarela.getTodasAsCasas(), "AMARELO");
+        Player playerVerde = new Player(4, guaritaVerde.getTodasAsCasas(), "VERDE");
 
-        Player playerVerde = new Player(1, guaritaVerde.getTodasAsCasas(), "VERDE");
-        Player playerVermelho = new Player(2, guaritaVermelha.getTodasAsCasas(), "VERMELHO");
-        Player playerAzul = new Player(3, guaritaAzul.getTodasAsCasas(), "AZUL");
-        Player playerAmarelo = new Player(4, guaritaAmarela.getTodasAsCasas(), "AMARELO");
-
-        players = new ArrayList<Player>();
-        players.add(playerVerde);
+        players = new ArrayList<Player>();        
         players.add(playerVermelho);
         players.add(playerAzul);
         players.add(playerAmarelo);
+        players.add(playerVerde);
 
         turnManager = new TurnManager();
 
