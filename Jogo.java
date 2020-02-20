@@ -102,6 +102,7 @@ public class Jogo {
         Player playerAzul = new Player(3, guaritaAzul.getTodasAsCasas(), "AZUL");
         Player playerAmarelo = new Player(4, guaritaAmarela.getTodasAsCasas(), "AMARELO");
 
+        players = new ArrayList<Player>();
         players.add(playerVerde);
         players.add(playerVermelho);
         players.add(playerAzul);
@@ -116,20 +117,20 @@ public class Jogo {
         // Obtemos uma das peças verdes que inicializamos logo acima para usa-la como
         // exemplo.
         // Movemos ela para a casa de inicio do jogador verde.
+
         Casa casaGuarita;
         Casa casaInicio;
         Peca peca;
 
-        guarita = tabuleiro.getGuarita("VERDE");
-        casaGuarita = guarita.getCasa(0);
-        peca = casaGuarita.getPeca();
-        casaInicio = tabuleiro.getCasaInicio("VERDE");
-        peca.mover(casaInicio);
-
-        // Apenas como um exemplo adicional, colocamos uma peça azul no tabuleiro.
-        peca = new Peca("AZUL");
-        casaInicio = tabuleiro.getCasaInicio("AZUL");
-        peca.mover(casaInicio);
+        /*
+         * guarita = tabuleiro.getGuarita("VERDE"); casaGuarita = guarita.getCasa(0);
+         * peca = casaGuarita.getPeca(); casaInicio = tabuleiro.getCasaInicio("VERDE");
+         * peca.mover(casaInicio);
+         * 
+         * // Apenas como um exemplo adicional, colocamos uma peça azul no tabuleiro.
+         * peca = new Peca("AZUL"); casaInicio = tabuleiro.getCasaInicio("AZUL");
+         * peca.mover(casaInicio);
+         */
 
         //
         // TRECHO DE EXEMPLO
@@ -180,7 +181,7 @@ public class Jogo {
 
         // Perguntamos à casa se ela possui uma peça.
         // Se não possuir, não há nada para se fazer.
-        if (!casa.possuiPeca() || dadosRolados) {
+        if (!casa.possuiPeca() || !dadosRolados) {
             return;
         }
 
@@ -214,13 +215,24 @@ public class Jogo {
                     // // Descomente a próxima linha para ser notificado quando isso acontecer:
                     System.err.println("Não há próxima casa!");
 
+                    if (casa.pertenceGuarita()) {
+                        if (dados[0].getValor() == dados[1].getValor()) {
+                            proximaCasa = tabuleiro.getCasaInicio(player.getColor());
+                            peca.mover(proximaCasa);
+                            moved = true;
+                        } else
+                            moved = true;
+                    }
+
                     // // Descomente as duas próximas linhas para verificar se a peça está na
                     // guarita:
-                    if (casa.pertenceGuarita())
+                    if (casa.pertenceGuarita()) {
                         System.out.println("A peça está na guarita");
+                        moved = true;
+                    }
                 }
             }
-
+            dadosRolados = false;
             turnManager.next();
         }
     }
