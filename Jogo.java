@@ -5,6 +5,8 @@ import java.util.*;
  *
  * @author Alan Moraes / alan@ci.ufpb.br
  * @author Victor Koehler / koehlervictor@cc.ci.ufpb.br
+ * @author Lucas Isaac / lucaspissaia@cc.ci.ufpb.br
+ * @author Luciano Pereira / lucianofilho@cc.ci.ufpb.br
  */
 public class Jogo {
 
@@ -14,9 +16,9 @@ public class Jogo {
     // Dados do jogo.
     private final Dado[] dados;
 
-    private boolean dadosRolados = false;
-    private ArrayList<Player> players;
-    private TurnManager turnManager;
+    private boolean dadosRolados = false; // guardam se os dados já foram rolados no turno
+    private ArrayList<Player> players; // possui os jogadores da opartida
+    private TurnManager turnManager; // gerenciador de turnos
 
     /**
      * Construtor padrão do Jogo Ludo. Isto é, um jogo de Ludo convencional com dois
@@ -59,24 +61,21 @@ public class Jogo {
 
     private void inicializaJogo() {
 
-        // AQUI SUGERE-SE QUE SE INSIRA A INICIALIZAÇÃO DO JOGO
-        // ISTO É, A INSERÇÃO DAS PEÇAS NO TABULEIRO E AS DEFINIÇÕES DOS CAMPOS
-        // SE NECESSÁRIO, MODIFIQUE A ASSINATURA DO MÉTODO
+        // Inicialização do Jogo
 
+        // Ininicialização das guaritas
         Guarita guaritaVermelha;
         Guarita guaritaVerde;
         Guarita guaritaAzul;
         Guarita guaritaAmarela;
 
+        // atribui as guaritas do tabulheiro às suas respectivas guaritas
         guaritaVermelha = tabuleiro.getGuarita("VERMELHO");
         guaritaVerde = tabuleiro.getGuarita("VERDE");
         guaritaAzul = tabuleiro.getGuarita("AZUL");
         guaritaAmarela = tabuleiro.getGuarita("AMARELO");
 
-        // Vamos inicializar a guarita verde colocando as 4 peças do jogador verde nela.
-        //
-        // Guarita = espaço onde fica as peças fora do jogo;
-
+        // Colocando as peças nas suas respectivas guaritas
         for (Casa casaGuarita : guaritaVermelha.getTodasAsCasas()) {
             Peca novaPeca = new Peca("VERMELHO");
             novaPeca.mover(casaGuarita);
@@ -97,44 +96,21 @@ public class Jogo {
             novaPeca.mover(casaGuarita);
         }
         
-        Player playerVermelho = new Player(1, guaritaVermelha.getTodasAsCasas(), "VERMELHO");
-        Player playerAzul = new Player(2, guaritaAzul.getTodasAsCasas(), "AZUL");
-        Player playerAmarelo = new Player(3, guaritaAmarela.getTodasAsCasas(), "AMARELO");
-        Player playerVerde = new Player(4, guaritaVerde.getTodasAsCasas(), "VERDE");
+        // Cria-se os jogadores
+        Player playerVermelho = new Player(0, guaritaVermelha.getTodasAsCasas(), "VERMELHO");
+        Player playerAzul = new Player(1, guaritaAzul.getTodasAsCasas(), "AZUL");
+        Player playerAmarelo = new Player(2, guaritaAmarela.getTodasAsCasas(), "AMARELO");
+        Player playerVerde = new Player(3, guaritaVerde.getTodasAsCasas(), "VERDE");
 
+        // adiciona os jogadores a um ArrayList para melhor controle
         players = new ArrayList<Player>();        
         players.add(playerVermelho);
         players.add(playerAzul);
         players.add(playerAmarelo);
         players.add(playerVerde);
 
+        // cria-se o gerenciador de turnos
         turnManager = new TurnManager();
-
-        //
-        // TRECHO DE EXEMPLO
-        //
-
-        // Obtemos uma das peças verdes que inicializamos logo acima para usa-la como
-        // exemplo.
-        // Movemos ela para a casa de inicio do jogador verde.
-
-        Casa casaGuarita;
-        Casa casaInicio;
-        Peca peca;
-
-        /*
-         * guarita = tabuleiro.getGuarita("VERDE"); casaGuarita = guarita.getCasa(0);
-         * peca = casaGuarita.getPeca(); casaInicio = tabuleiro.getCasaInicio("VERDE");
-         * peca.mover(casaInicio);
-         * 
-         * // Apenas como um exemplo adicional, colocamos uma peça azul no tabuleiro.
-         * peca = new Peca("AZUL"); casaInicio = tabuleiro.getCasaInicio("AZUL");
-         * peca.mover(casaInicio);
-         */
-
-        //
-        // TRECHO DE EXEMPLO
-        //
     }
 
     /**
@@ -144,16 +120,10 @@ public class Jogo {
      */
     public void rolarDados() {
 
-        // AQUI SE IMPLEMENTARÁ AS REGRAS DO JOGO.
         // TODA VEZ QUE O USUÁRIO CLICAR NO DADO DESENHADO NA INTERFACE GRÁFICA,
         // ESTE MÉTODO SERÁ INVOCADO.
 
-        //
-        // TRECHO DE EXEMPLO
-        //
-
-        // Aqui percorremos cada dado para lançá-lo individualmente.
-
+        // dados são rolados, há não ser que já foram rolados no atual turno
         if (!dadosRolados) {
             for (Dado dado : dados) {
                 dado.rolar();
@@ -171,19 +141,19 @@ public class Jogo {
      */
     public void escolherCasa(Casa casa) {
 
-        // AQUI SE IMPLEMENTARÁ AS REGRAS DO JOGO.
         // TODA VEZ QUE O USUÁRIO CLICAR EM UMA CASA DESENHADA NA INTERFACE GRÁFICA,
         // ESTE MÉTODO SERÁ INVOCADO.
 
-        //
-        // TRECHO DE EXEMPLO
-        //
 
-        // Perguntamos à casa se ela possui uma peça.
-        // Se não possuir, não há nada para se fazer.
+        // Perguntamos à casa se ela possui uma peça e 
+        // Vemos se os dados foram rolados no turno atual
+        // Se não possuir ou os dados não foram rolados, não há nada para se fazer.
         if (!casa.possuiPeca() || !dadosRolados) {
             return;
         }
+
+
+        // STOPPED HERE
 
         // Perguntamos à casa qual é a peça.
         Peca peca = casa.getPeca();
