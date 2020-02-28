@@ -95,7 +95,7 @@ public class Jogo {
             Peca novaPeca = new Peca("AMARELO");
             novaPeca.mover(casaGuarita);
         }
-        
+
         // Cria-se os jogadores
         Player playerVermelho = new Player(0, guaritaVermelha.getTodasAsCasas(), "VERMELHO");
         Player playerAzul = new Player(1, guaritaAzul.getTodasAsCasas(), "AZUL");
@@ -103,7 +103,7 @@ public class Jogo {
         Player playerVerde = new Player(3, guaritaVerde.getTodasAsCasas(), "VERDE");
 
         // adiciona os jogadores a um ArrayList para melhor controle
-        players = new ArrayList<Player>();        
+        players = new ArrayList<Player>();
         players.add(playerVermelho);
         players.add(playerAzul);
         players.add(playerAmarelo);
@@ -144,20 +144,19 @@ public class Jogo {
         // TODA VEZ QUE O USUÁRIO CLICAR EM UMA CASA DESENHADA NA INTERFACE GRÁFICA,
         // ESTE MÉTODO SERÁ INVOCADO.
 
-
-        // Perguntamos à casa se ela possui uma peça e 
+        // Perguntamos à casa se ela possui uma peça e
         // Vemos se os dados foram rolados no turno atual
         // Se não possuir ou os dados não foram rolados, não há nada para se fazer.
         if (!casa.possuiPeca() || !dadosRolados) {
             return;
         }
 
-
-        // STOPPED HERE
-
         // Perguntamos à casa qual é a peça.
         Peca peca = casa.getPeca();
+        // Pegamos o jogador da vez
         Player player = players.get(turnManager.getWhoIsNow());
+        // verificamos se a peça perternce ao jogador da vez
+        // se não for, a peça não se move e o jogo não continua
         if (player.isThisPlayer(peca)) {
 
             // Percorremos cada dado, somando o valor nele à variável somaDados.
@@ -172,39 +171,68 @@ public class Jogo {
                 proximaCasa = proximaCasa.getCasaSeguinte();
             }
 
+            // o jogo não continua a execução enquanto uma peça
+            // do jogador da vez não se mecheu (moved == true)
             for (boolean moved = false; !moved;) {
 
+                // se a próxima casa não for nula, mova a peça até lá
+                // ---TO DO: é necessária uma vericação se há uma peça na casa de destino---
+                // ---caso seja peça de outro jogador, deve-se haver a captura e a peça---
+                // ---capturada deve voltar a sua respectiva guarita, caso seja a peça do---
+                // ---próprio jogador da vez nada deve acontecer, as regras não permitem---
+                // ---torre---
                 if (proximaCasa != null) {
                     // Finalmente, a variável casaN contém a casa que a peça deve ser inserida.
-                    peca.mover(proximaCasa);
-                    dadosRolados = false;
-                    moved = true;
+                    peca.mover(proximaCasa); // move a peça
+                    moved = true; // faz sair do loop, o movimento foi feito
                 } else {
                     // // NÃO HÁ PRÓXIMA CASA!
                     // // FIM DO JOGO? A PEÇA ESTÁ NA GUARITA?
                     // // Descomente a próxima linha para ser notificado quando isso acontecer:
-                    System.err.println("Não há próxima casa!");
+                    // System.err.println("Não há próxima casa!");
 
-                    if (casa.pertenceGuarita()) {
+                    // a próxima casa só é nula se:
+                    // 1. A peça está na guarita
+                    // 2. A peça está na casa final
+                    // No caso 1, a peça só sai da guarita se os dados tiverem valores iguais
+                    // a peça vai pra casa inicial da sua cor, que é obtida pelo objeto tabulheiro
+                    // No caso 2, não há o que fazer, a peça não deve se mecher e o jogo deve
+                    // permanecer parado
+
+                    if (casa.pertenceGuarita()) { // verifica se a peça está na guarita
+                        // verifica se os dados são iguais, para tirar da guarita
                         if (dados[0].getValor() == dados[1].getValor()) {
+                            // move a peça para a casa inicial
+
+                            // ---NOTA: a peça não deve sair se a casa de início estiver ocupada----
+                            // ---TO DO: implantar a NOTA---
                             proximaCasa = tabuleiro.getCasaInicio(player.getColor());
                             peca.mover(proximaCasa);
-                            moved = true;
-                        } else
+                            moved = true; // a peça saiu da guarita, movimento feito
+                        }
+                        // ---TO DO: moved só pode ser mudado pra true se não houver---
+                        // ---nenhuma peça do jogador atual que possa se mecher, peças---
+                        // ---na casa final não contam, já que não se mechem mais---
+                        // ---caso o jogador não possa mecher nenhuma peça enão tirar---
+                        // ---uam dupla nos dados pra sair da guarita, deve-se ir para o próximo---
+                        // ---turno---
+                        else
                             moved = true;
                     }
 
                     // // Descomente as duas próximas linhas para verificar se a peça está na
                     // guarita:
-                    if (casa.pertenceGuarita()) {
-                        System.out.println("A peça está na guarita");
-                        moved = true;
-                    }
+                    // if (casa.pertenceGuarita()) {
+                    // System.out.println("A peça está na guarita");
+                    // moved = true;
                 }
             }
-            dadosRolados = false;
-            turnManager.next();
         }
+
+        // permite que os dados sejam rolados denovo
+        // já que, como a peça já se mecheu, o próximo turno vai começar
+        dadosRolados = false;
+        turnManager.next(); // finaliza o turno e começa o próximo
     }
 
     /**

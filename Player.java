@@ -12,10 +12,11 @@ public class Player {
     private String color; // cor da guarita
 
     /**
-     * Construtor. 
-     * @param number número do jogador
+     * Construtor.
+     * 
+     * @param number        número do jogador
      * @param casaDaGuarita casas da guarita do Jogador
-     * @param color cor da guarita do jogador 
+     * @param color         cor da guarita do jogador
      */
     public Player(int number, Casa[] casaDaGuarita, String color) {
         this.number = number;
@@ -28,6 +29,7 @@ public class Player {
 
     /**
      * Número do jogador
+     * 
      * @return número do jogador
      */
     public int getNumber() {
@@ -36,6 +38,7 @@ public class Player {
 
     /**
      * Cor do jogador
+     * 
      * @return cor do jogador
      */
     public String getColor() {
@@ -44,6 +47,7 @@ public class Player {
 
     /**
      * Verifica se a peça passada pertence ao jogador
+     * 
      * @param peca peça a ser verificada
      * @return true se a peça for do jogador, false caso contrário
      */
