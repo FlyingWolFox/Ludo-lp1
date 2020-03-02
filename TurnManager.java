@@ -32,6 +32,6 @@ public class TurnManager {
         if (whoIsNow + 1 < 4)
             whoIsNow++;
         else
-            whoIsNow = 1;
+            whoIsNow = 0;
     }
 }

@@ -17,7 +17,7 @@ public class Jogo {
     private final Dado[] dados;
 
     private boolean dadosRolados = false; // guardam se os dados já foram rolados no turno
-    private ArrayList<Player> players; // possui os jogadores da opartida
+    private ArrayList<Player> players; // possui os jogadores da partida
     private TurnManager turnManager; // gerenciador de turnos
 
     /**
@@ -213,8 +213,8 @@ public class Jogo {
                         // ---TO DO: moved só pode ser mudado pra true se não houver---
                         // ---nenhuma peça do jogador atual que possa se mecher, peças---
                         // ---na casa final não contam, já que não se mechem mais---
-                        // ---caso o jogador não possa mecher nenhuma peça enão tirar---
-                        // ---uam dupla nos dados pra sair da guarita, deve-se ir para o próximo---
+                        // ---caso o jogador não possa mecher nenhuma peça e não tirar---
+                        // ---uma dupla nos dados pra sair da guarita, deve-se ir para o próximo---
                         // ---turno---
                         else
                             moved = true;
@@ -229,7 +229,7 @@ public class Jogo {
             }
         }
 
-        // permite que os dados sejam rolados denovo
+        // permite que os dados sejam rolados de novo
         // já que, como a peça já se mecheu, o próximo turno vai começar
         dadosRolados = false;
         turnManager.next(); // finaliza o turno e começa o próximo

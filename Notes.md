@@ -94,3 +94,8 @@ int getValor();
     public Casa getCasaInicio(String cor)
 
 * public class Jogo
+
+"VERMELHO"
+"AZUL"
+"AMARELO"
+"VERDE"
