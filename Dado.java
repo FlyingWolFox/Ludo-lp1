@@ -24,14 +24,15 @@ public class Dado {
      */
     public Dado(long seed) {
         this.random = new Random(seed);
-        this.valor = -1;
+        //this.valor = -1;
+        this.valor = 2;
     }
 
     /**
      * Lança os dados e salva o seu valor.
      */
     public void rolar() {
-        valor = random.nextInt(6) + 1;
+        //valor = random.nextInt(6) + 1;
     }
 
     /**
