@@ -24,17 +24,19 @@ public class Dado {
      */
     public Dado(long seed) {
         this.random = new Random(seed);
-        //this.valor = -1;
-        this.valor = 4;
+        this.valor = -1;
     }
 
     /**
      * Lança os dados e salva o seu valor.
      */
     public void rolar() {
-        //valor = random.nextInt(6) + 1;
+        valor = random.nextInt(6) + 1;
+        /*
+        * Just for testing purposes (GLaDOS voice)
         String valor = System.console().readLine();
         this.valor = Integer.parseInt(valor);
+        */
     }
 
     /**
