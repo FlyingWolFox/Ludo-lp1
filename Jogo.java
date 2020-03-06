@@ -1,4 +1,8 @@
 import java.util.*;
+
+import javax.swing.JMenuItem;
+import javax.swing.event.MenuKeyEvent;
+
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -22,12 +26,15 @@ public class Jogo {
 	private ArrayList<Player> players; // possui os jogadores da partida
 	private TurnManager turnManager; // gerenciador de turnos
 
+	private JMenuItem menuNovo;
+
 	/**
 	 * Construtor padrão do Jogo Ludo. Isto é, um jogo de Ludo convencional com dois
 	 * dados.
 	 */
-	public Jogo() {
+	public Jogo(JMenuItem menuNovo) {
 		this(2);
+		this.menuNovo = menuNovo;
 	}
 
 	/**
@@ -224,7 +231,8 @@ public class Jogo {
 						if (qtDePecas == 4) {
 							showMessageDialog(null, proximaCasa.getCor() + " venceu!");
 							win = true;
-							Principal principal = new Principal();
+							//Principal principal = new Principal();
+							menuNovo.doClick();
 						}
 						moved = true;
 
