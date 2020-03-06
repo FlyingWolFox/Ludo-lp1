@@ -25,7 +25,7 @@ public class Dado {
     public Dado(long seed) {
         this.random = new Random(seed);
         //this.valor = -1;
-        this.valor = 2;
+        this.valor = 4;
     }
 
     /**
@@ -33,6 +33,8 @@ public class Dado {
      */
     public void rolar() {
         //valor = random.nextInt(6) + 1;
+        String valor = System.console().readLine();
+        this.valor = Integer.parseInt(valor);
     }
 
     /**

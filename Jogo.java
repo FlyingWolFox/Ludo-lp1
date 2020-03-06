@@ -1,4 +1,5 @@
 import java.util.*;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Implementa as mecânicas e regras do jogo Ludo.
@@ -17,6 +18,7 @@ public class Jogo {
 	private final Dado[] dados;
 
 	private boolean dadosRolados = false; // guardam se os dados já foram rolados no turno
+	private boolean win = false; // guarda se o jogo foi ganho
 	private ArrayList<Player> players; // possui os jogadores da partida
 	private TurnManager turnManager; // gerenciador de turnos
 
@@ -124,7 +126,7 @@ public class Jogo {
 		// ESTE MÉTODO SERÁ INVOCADO.
 
 		// dados são rolados, há não ser que já foram rolados no atual turno
-		if (!dadosRolados) {
+		if (!dadosRolados && !win) {
 			for (Dado dado : dados) {
 				dado.rolar();
 			}
@@ -147,7 +149,7 @@ public class Jogo {
 		// Perguntamos à casa se ela possui uma peça e
 		// Vemos se os dados foram rolados no turno atual
 		// Se não possuir ou os dados não foram rolados, não há nada para se fazer.
-		if (!casa.possuiPeca() || !dadosRolados) {
+		if (!casa.possuiPeca() || !dadosRolados || win) {
 			return;
 		}
 
@@ -173,7 +175,10 @@ public class Jogo {
 					proximaCasa = proximaCasa.getCasaSegura();
 				else if (proximaCasa.ehCasaFinal()) {
 					if (i == 0)
+					{
+						proximaCasa = null;
 						break;
+					}
 					curupira = true;
 					proximaCasa = proximaCasa.getCasaAnterior();
 				} else if (curupira && proximaCasa.getCasaAnterior() != null)
@@ -213,8 +218,17 @@ public class Jogo {
 						}
 					}
 					if (proximaCasa.ehCasaFinal()) {
+						int qtDePecas = proximaCasa.getQuantidadePecas();
 						peca.mover(proximaCasa);
+						qtDePecas++;
+						proximaCasa.setQuantidadePecas(qtDePecas);
+						if (qtDePecas == 4) {
+							showMessageDialog(null, proximaCasa.getCor() + " venceu!");
+							win = true;
+							Principal principal = new Principal();
+						}
 						moved = true;
+						
 					}
 				} else {
 					// // NÃO HÁ PRÓXIMA CASA!
@@ -266,13 +280,7 @@ public class Jogo {
 					}
 
 					if (casa.ehCasaFinal()) {
-						int qtDePecas = casa.getQuantidadePecas();
-						peca.mover(proximaCasa);
-						qtDePecas++;
-						casa.setQuantidadePecas(qtDePecas);
-						if (qtDePecas == 4) {
-							// ---TO DO: Vitória---
-						}
+						return;
 					}
 					// // Descomente as duas próximas linhas para verificar se a peça está na
 					// guarita:
