@@ -40,8 +40,8 @@ public class Principal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 reiniciarJogo(menuNovo);
             }
-		});
-		
+        });
+
         // configura action listener para o menu sair
         menuSair.addActionListener(new ActionListener() {
             @Override
@@ -65,6 +65,8 @@ public class Principal extends JFrame {
 
     /**
      * Cria um novo jogo e atualiza o tabuleiro gráfico.
+     * 
+     * @param menuNovo JMenuItem que inicia um novo jogo
      */
     public void reiniciarJogo(JMenuItem menuNovo) {
 

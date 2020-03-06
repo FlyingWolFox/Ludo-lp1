@@ -1,8 +1,9 @@
-import java.util.*;
 
+// Usado para a ArrayList de players
+import java.util.ArrayList;
+// Para poder reiniciar o jogo a partir do JMenuItem
 import javax.swing.JMenuItem;
-import javax.swing.event.MenuKeyEvent;
-
+// Para exibir a caixa de diálogo de vitória
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -22,15 +23,14 @@ public class Jogo {
 	private final Dado[] dados;
 
 	private boolean dadosRolados = false; // guardam se os dados já foram rolados no turno
-	private boolean win = false; // guarda se o jogo foi ganho
 	private ArrayList<Player> players; // possui os jogadores da partida
 	private TurnManager turnManager; // gerenciador de turnos
 
-	private JMenuItem menuNovo;
+	private JMenuItem menuNovo; // segura o gatilho para reiniciar o jogo
 
 	/**
 	 * Construtor padrão do Jogo Ludo. Isto é, um jogo de Ludo convencional com dois
-	 * dados.
+	 * dados. menuNovo é passado como argumento para o jogo ser reiniciável
 	 */
 	public Jogo(JMenuItem menuNovo) {
 		this(2);
@@ -133,7 +133,7 @@ public class Jogo {
 		// ESTE MÉTODO SERÁ INVOCADO.
 
 		// dados são rolados, há não ser que já foram rolados no atual turno
-		if (!dadosRolados && !win) {
+		if (!dadosRolados) {
 			for (Dado dado : dados) {
 				dado.rolar();
 			}
@@ -156,7 +156,7 @@ public class Jogo {
 		// Perguntamos à casa se ela possui uma peça e
 		// Vemos se os dados foram rolados no turno atual
 		// Se não possuir ou os dados não foram rolados, não há nada para se fazer.
-		if (!casa.possuiPeca() || !dadosRolados || win) {
+		if (!casa.possuiPeca() || !dadosRolados) {
 			return;
 		}
 
@@ -176,23 +176,42 @@ public class Jogo {
 
 			// Percorreremos N casas.
 			Casa proximaCasa = casa;
+			// curupira controla se a peça
+			// andará para frente ou para trás,
+			// nas casas seguras
 			boolean curupira = false;
 			for (int i = 0; i < somaDados && proximaCasa != null; i++) {
+				// caso a peça esteja na entrada da casa segura
+				// ele entra lá
 				if (proximaCasa.ehEntradaZonaSegura() && (proximaCasa.getCasaSegura().getCor() == peca.getCor()))
 					proximaCasa = proximaCasa.getCasaSegura();
+				// caso a peça já esteja na casa final
+				// isso vai acionar curupira e faz a peça
+				// andar para trás
 				else if (proximaCasa.ehCasaFinal()) {
+					// caso a peça já esteja na casa final
+					// não há nada há fazer
 					if (i == 0) {
 						proximaCasa = null;
 						break;
 					}
 					curupira = true;
 					proximaCasa = proximaCasa.getCasaAnterior();
-				} else if (curupira && proximaCasa.getCasaAnterior() != null)
+
+				}
+				// faz a peça retroceder até a primeira casa segura
+				// caso a peça "passou direto" pela casa final
+				else if (curupira && proximaCasa.getCasaAnterior() != null)
 					proximaCasa = proximaCasa.getCasaAnterior();
+				// a peça atingiu a primeira casa segura,
+				// curupira é desacionar curupira, para
+				// a peça voltar a se mover para frente
 				else if (curupira && proximaCasa.getCasaAnterior() == null) {
 					proximaCasa = proximaCasa.getCasaSeguinte();
 					curupira = false;
-				} else
+				}
+				// em nenhum caso especial, a peça se move normalmente
+				else
 					proximaCasa = proximaCasa.getCasaSeguinte();
 
 			}
@@ -203,12 +222,19 @@ public class Jogo {
 
 				// se a próxima casa não for nula, mova a peça até lá
 				if (proximaCasa != null) {
+					// caso a próxima caso não seja final
+					// o movimento é normal
 					if (!proximaCasa.ehCasaFinal()) {
 						// Finalmente, a variável casaN contém a casa que a peça deve ser inserida.
 						Peca pecaProxima = proximaCasa.getPeca();
+						// caso tenha uma peça na casa de destino:
 						if (pecaProxima != null) {
+							// se for de outro jogador, capture ela
+							// e a mande pra guarita
 							if (!player.isThisPlayer(pecaProxima)) {
+								// pega a peça que está na casa de destino
 								Guarita pecaRetorno = tabuleiro.getGuarita(pecaProxima.getCor());
+								// e a move para a guarita
 								for (Casa casaGuarita : pecaRetorno.getTodasAsCasas()) {
 									if (!casaGuarita.possuiPeca()) {
 										pecaProxima.mover(casaGuarita);
@@ -216,33 +242,38 @@ public class Jogo {
 								}
 								peca.mover(proximaCasa);
 								moved = true; // faz sair do loop, o movimento foi feito
-							} else
+							}
+							// caso seja do mesmo jogador, nada acontece
+							else
 								return;
-						} else {
+						}
+						// caso não haja peça na casa de destino
+						// a peça vai até lá
+						else {
 							peca.mover(proximaCasa); // move a peça
 							moved = true; // faz sair do loop, o movimento foi feito
 						}
 					}
+					// caso a casa de destino seja a casa final
+					// devemos mover a peça até lá
+					// e aumentar o número de peças na casa
 					if (proximaCasa.ehCasaFinal()) {
 						int qtDePecas = proximaCasa.getQuantidadePecas();
 						peca.mover(proximaCasa);
 						qtDePecas++;
 						proximaCasa.setQuantidadePecas(qtDePecas);
+						// caso haja 4 peças na casa final, o jogador venceu!
 						if (qtDePecas == 4) {
+							// mostra uma caixa de diálogo, mostrando quem venceu
 							showMessageDialog(null, proximaCasa.getCor() + " venceu!");
-							win = true;
-							//Principal principal = new Principal();
+							// ativa o gatilho do item do menu Arquivo, Novo, efetivamente reiniciando o
+							// jogo
 							menuNovo.doClick();
 						}
 						moved = true;
-
 					}
 				} else {
-					// // NÃO HÁ PRÓXIMA CASA!
-					// // FIM DO JOGO? A PEÇA ESTÁ NA GUARITA?
-					// // Descomente a próxima linha para ser notificado quando isso acontecer:
-					// System.err.println("Não há próxima casa!");
-
+					// não há próxima casa,
 					// a próxima casa só é nula se:
 					// 1. A peça está na guarita
 					// 2. A peça está na casa final
@@ -259,8 +290,10 @@ public class Jogo {
 							// ---NOTA: a peça não deve sair se a casa de início estiver ocupada----
 							proximaCasa = tabuleiro.getCasaInicio(player.getColor());
 
+							// verifica se há uma peça na casa inicial
 							Peca pecaProxima = proximaCasa.getPeca();
 							if (pecaProxima != null) {
+								// caso não seja do mesmo jogador que estiver saindo, deve-se haver a captura
 								if (!player.isThisPlayer(pecaProxima)) {
 									Guarita pecaRetorno = tabuleiro.getGuarita(pecaProxima.getCor());
 									for (Casa casaGuarita : pecaRetorno.getTodasAsCasas()) {
@@ -270,13 +303,20 @@ public class Jogo {
 									}
 									peca.mover(proximaCasa);
 									moved = true; // faz sair do loop, o movimento foi feito
-								} else
+								}
+								// caso seja, nada acontece
+								else
 									return;
-							} else {
+							}
+							// caso não haja nenhuma peça, o movimento é normal e a peça sai da guarita
+							else {
 								peca.mover(proximaCasa); // move a peça
 								moved = true; // faz sair do loop, o movimento foi feito
 							}
-						} else {
+						}
+						// verifica se o jogador pode mover outra peça. Caso positivo o jogo não anda,
+						// caso negativo, ele perde a vez
+						else {
 							for (Peca pecaDoPlayer : player.getPecas()) {
 								Casa casaDaPeça = pecaDoPlayer.getCasa();
 								if (!casaDaPeça.pertenceGuarita() && !casaDaPeça.ehCasaFinal())
@@ -286,19 +326,16 @@ public class Jogo {
 						}
 					}
 
+					// caso a peça esteja na casa finala, não há nada a se fazer
 					if (casa.ehCasaFinal()) {
 						return;
 					}
-					// // Descomente as duas próximas linhas para verificar se a peça está na
-					// guarita:
-					// if (casa.pertenceGuarita()) {
-					// System.out.println("A peça está na guarita");
-					// moved = true;
 				}
 			}
 			// permite que os dados sejam rolados de novo
 			// já que, como a peça já se mecheu, o próximo turno vai começar
 			dadosRolados = false;
+			// caso o jogador tire uma dupla nos dados, ele pode jogar de novo
 			if (dados[0].getValor() != dados[1].getValor())
 				turnManager.next(); // finaliza o turno e começa o próximo
 		}
