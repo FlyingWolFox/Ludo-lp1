@@ -174,8 +174,7 @@ public class Jogo {
 				if (proximaCasa.ehEntradaZonaSegura() && (proximaCasa.getCasaSegura().getCor() == peca.getCor()))
 					proximaCasa = proximaCasa.getCasaSegura();
 				else if (proximaCasa.ehCasaFinal()) {
-					if (i == 0)
-					{
+					if (i == 0) {
 						proximaCasa = null;
 						break;
 					}
@@ -228,7 +227,7 @@ public class Jogo {
 							Principal principal = new Principal();
 						}
 						moved = true;
-						
+
 					}
 				} else {
 					// // NÃO HÁ PRÓXIMA CASA!
