@@ -32,6 +32,11 @@ public class Dado {
      */
     public void rolar() {
         valor = random.nextInt(6) + 1;
+        /*
+        * Just for testing purposes (GLaDOS voice)
+        String valor = System.console().readLine();
+        this.valor = Integer.parseInt(valor);
+        */
     }
 
     /**

@@ -8,6 +8,8 @@ import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+
 import java.net.URI;
 
 /**
@@ -36,7 +38,7 @@ public class Principal extends JFrame {
         menuNovo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                reiniciarJogo();
+                reiniciarJogo(menuNovo);
             }
         });
 
@@ -58,17 +60,19 @@ public class Principal extends JFrame {
         super.setLocationRelativeTo(null);
         super.setVisible(true);
 
-        reiniciarJogo();
+        reiniciarJogo(menuNovo);
     }
 
     /**
      * Cria um novo jogo e atualiza o tabuleiro gráfico.
+     * 
+     * @param menuNovo JMenuItem que inicia um novo jogo
      */
-    public void reiniciarJogo() {
+    public void reiniciarJogo(JMenuItem menuNovo) {
 
         // Faz com que a peça verde caia em cima da vermelha na primeira volta.
         // jogo = new Jogo(new Dado(14));
-        jogo = new Jogo();
+        jogo = new Jogo(menuNovo);
 
         jPanel_Dados.removeAll();
         for (int i = 0; i < jogo.getQuantidadeDados(); i++) {

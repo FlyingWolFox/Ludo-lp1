@@ -45,6 +45,10 @@ public class Player {
         return color;
     }
 
+    public ArrayList<Peca> getPecas(){
+        return pecas;
+    }
+
     /**
      * Verifica se a peça passada pertence ao jogador
      * 
