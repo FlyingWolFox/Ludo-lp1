@@ -11,15 +11,13 @@ public class Tabuleiro {
     private Casa casaInicioAzul;
     private Casa casaInicioVerde;
     private Casa casaInicioVermelho;
-    
-    
+
     // Armazena as guaritas do tabuleiro.
     private Guarita guaritaAmarelo;
     private Guarita guaritaAzul;
     private Guarita guaritaVerde;
     private Guarita guaritaVermelho;
-    
-    
+
     /**
      * Construtor padrão de um tabuleiro.
      */
@@ -28,16 +26,15 @@ public class Tabuleiro {
         guaritaAzul = new Guarita("AZUL");
         guaritaVerde = new Guarita("VERDE");
         guaritaVermelho = new Guarita("VERMELHO");
-        
+
         // Inicializamos um tabuleiro de Ludo
-        
+
         // Casas de Inicio
         casaInicioAmarelo = new Casa("AMARELO");
         casaInicioAzul = new Casa("AZUL");
         casaInicioVerde = new Casa("VERDE");
         casaInicioVermelho = new Casa("VERMELHO");
-        
-        
+
         // Casas comuns
         // Usaremos uma espécie de lista encadeada informal para guardar as casas.
         popularCasas(casaInicioAmarelo, casaInicioVerde);
@@ -45,30 +42,33 @@ public class Tabuleiro {
         popularCasas(casaInicioVermelho, casaInicioAzul);
         popularCasas(casaInicioAzul, casaInicioAmarelo);
     }
-    
+
     /**
      * Método usado na construção do tabuleiro para popular as casas com for.
+     * 
      * @param casa
-     * @param ultimaCasa 
+     * @param ultimaCasa
      */
     private void popularCasas(Casa primeiraCasa, Casa ultimaCasa) {
-        Casa casa = primeiraCasa; 
+        Casa casa = primeiraCasa;
         for (int i = 0; i < 12; i++) {
             Casa casaSeguinte = new Casa();
             casa.setCasaSeguinte(casaSeguinte);
             casa = casaSeguinte;
-            
+
             if (i == 10) {
                 criarCasasZonaSegura(casa, ultimaCasa.getCor());
             }
         }
         casa.setCasaSeguinte(ultimaCasa);
     }
-    
+
     /**
-     * Método usado na construção do tabuleiro para popular as casas seguras com for.
+     * Método usado na construção do tabuleiro para popular as casas seguras com
+     * for.
+     * 
      * @param casaEntradaZonaSegura
-     * @param cor 
+     * @param cor
      */
     private void criarCasasZonaSegura(Casa casaEntradaZonaSegura, String cor) {
         Casa casaZonaSegura = new Casa(cor);
@@ -79,11 +79,11 @@ public class Tabuleiro {
             casaZonaSegura = casaNova;
         }
     }
-    
-    
+
     /**
-     * Obtém a guarita do jogador especificado.
-     * Consulte a classe Guarita para mais detalhes.
+     * Obtém a guarita do jogador especificado. Consulte a classe Guarita para mais
+     * detalhes.
+     * 
      * @param cor Cor do jogador. Consulte a classe Cores.
      * @return Guarita do jogador
      */
@@ -101,10 +101,10 @@ public class Tabuleiro {
                 return null;
         }
     }
-    
-    
+
     /**
      * Obtém a casa de início da cor especificada.
+     * 
      * @param cor Cor do jogador. Consulte a classe Cores.
      * @return Casa de início.
      */
@@ -122,5 +122,5 @@ public class Tabuleiro {
                 return null;
         }
     }
-    
+
 }

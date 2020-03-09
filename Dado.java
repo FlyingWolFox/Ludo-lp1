@@ -9,33 +9,40 @@ import java.util.Random;
 public class Dado {
     private Random random; // Gerador de números aleatórios
     private int valor; // Último valor obtido ao jogar os dados
-    
+
     /**
      * Construtor padrão para dados.
      */
     public Dado() {
         this(System.currentTimeMillis());
     }
-    
+
     /**
      * Construtor de dados batizados.
+     * 
      * @param seed Semente do gerador
      */
     public Dado(long seed) {
         this.random = new Random(seed);
         this.valor = -1;
     }
-    
+
     /**
      * Lança os dados e salva o seu valor.
      */
     public void rolar() {
         valor = random.nextInt(6) + 1;
+        /*
+        * Just for testing purposes (GLaDOS voice)
+        String valor = System.console().readLine();
+        this.valor = Integer.parseInt(valor);
+        */
     }
-    
+
     /**
-     * Obtém o último valor obtido ao lançar os dados.
-     * Retorna -1 caso jogarDados ainda não tenha sido invocado.
+     * Obtém o último valor obtido ao lançar os dados. Retorna -1 caso jogarDados
+     * ainda não tenha sido invocado.
+     * 
      * @return Último valor obtido ao lançar os dados.
      */
     public int getValor() {

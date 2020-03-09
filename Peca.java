@@ -5,42 +5,45 @@
  * @author Victor Koehler / koehlervictor@cc.ci.ufpb.br
  */
 public class Peca {
-    
+
     // Cor da peça
     private final String cor;
-    
+
     // Casa na qual a peça se encontra
     private Casa casa;
-    
+
     /**
      * Construtor padrão para peças.
+     * 
      * @param cor Cor da peça
      */
     public Peca(String cor) {
         this.cor = cor;
         this.casa = null;
     }
-    
-    
+
     /**
      * Cor da peça.
+     * 
      * @return Cor da peça.
      */
     public String getCor() {
         return cor;
     }
-    
+
     /**
      * Casa na qual a peça se encontra.
+     * 
      * @return Casa na qual a peça se encontra.
      */
     public Casa getCasa() {
         return casa;
     }
-    
+
     /**
      * Retira a peça da casa atual e coloca-a na casa de destino.
-     * @param casaDestino 
+     * 
+     * @param casaDestino
      */
     public void mover(Casa casaDestino) {
         if (casa != null) {
