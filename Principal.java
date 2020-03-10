@@ -17,6 +17,8 @@ import java.net.URI;
  *
  * @author Alan Moraes / alan@ci.ufpb.br
  * @author Victor Koehler / koehlervictor@cc.ci.ufpb.br
+ * @author Lucas Isaac / lucaspissaia@cc.ci.ufpb.br
+ * @author Luciano Pereira / lucianofilho@cc.ci.ufpb.br
  */
 public class Principal extends JFrame {
 
