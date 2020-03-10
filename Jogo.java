@@ -168,6 +168,12 @@ public class Jogo {
 		// se não for, a peça não se move e o jogo não continua
 		if (player.isThisPlayer(peca)) {
 
+			if (estaTravado(player, dados)) {
+				turnManager.next();
+				dadosRolados = false;
+				return;
+			}
+
 			// Percorremos cada dado, somando o valor nele à variável somaDados.
 			int somaDados = 0;
 			for (Dado dado : dados) {
@@ -243,8 +249,7 @@ public class Jogo {
 								peca.mover(proximaCasa);
 								moved = true; // faz sair do loop, o movimento foi feito
 							}
-							if(peca.equals(pecaProxima))
-							{
+							if (peca.equals(pecaProxima)) {
 								peca.mover(proximaCasa);
 								moved = true; // faz sair do loop, o movimento foi feito
 							}
@@ -355,6 +360,73 @@ public class Jogo {
 	public String getJogadorDaVez() {
 		Player player = players.get(turnManager.getWhoIsNow());
 		return player.getColor();
+	}
+
+	public boolean estaTravado(Player jogador, Dado[] dados) {
+		int somaDados = dados[0].getValor() + dados[1].getValor();
+		for (Peca peca : jogador.getPecas()) {
+			Casa proximaCasa = peca.getCasa();
+			if (!peca.getCasa().ehCasaFinal() && !peca.getCasa().pertenceGuarita()) {
+				boolean curupira = false;
+				for (int i = 0; i < somaDados && proximaCasa != null; i++) {
+					// caso a peça esteja na entrada da casa segura
+					// ele entra lá
+					if (proximaCasa.ehEntradaZonaSegura() && (proximaCasa.getCasaSegura().getCor() == peca.getCor()))
+						proximaCasa = proximaCasa.getCasaSegura();
+					// caso a peça já esteja na casa final
+					// isso vai acionar curupira e faz a peça
+					// andar para trás
+					else if (proximaCasa.ehCasaFinal()) {
+						// caso a peça já esteja na casa final
+						// não há nada há fazer
+						if (i == 0) {
+							proximaCasa = null;
+							break;
+						}
+						curupira = true;
+						proximaCasa = proximaCasa.getCasaAnterior();
+
+					}
+					// faz a peça retroceder até a primeira casa segura
+					// caso a peça "passou direto" pela casa final
+					else if (curupira && proximaCasa.getCasaAnterior() != null)
+						proximaCasa = proximaCasa.getCasaAnterior();
+					// a peça atingiu a primeira casa segura,
+					// curupira é desacionar curupira, para
+					// a peça voltar a se mover para frente
+					else if (curupira && proximaCasa.getCasaAnterior() == null) {
+						proximaCasa = proximaCasa.getCasaSeguinte();
+						curupira = false;
+					}
+					// em nenhum caso especial, a peça se move normalmente
+					else
+						proximaCasa = proximaCasa.getCasaSeguinte();
+
+				}
+				if (proximaCasa.possuiPeca() && !proximaCasa.ehCasaFinal()) {
+					if (!jogador.isThisPlayer(proximaCasa.getPeca()) && !peca.equals(proximaCasa.getPeca())) {
+						return false;
+					}
+					if (peca.equals(proximaCasa.getPeca()))
+						return false;
+				} else
+					return false;
+			}
+			if (peca.getCasa().pertenceGuarita()) {
+				if (dados[0].getValor() == dados[1].getValor()) {
+					// verifica se há uma peça na casa inicial
+					proximaCasa = tabuleiro.getCasaInicio(jogador.getColor());
+					Peca pecaProxima = proximaCasa.getPeca();
+					if (pecaProxima != null) {
+						if (!jogador.isThisPlayer(pecaProxima)) {
+							return false;
+						}
+					} else
+						return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
