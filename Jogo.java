@@ -129,7 +129,7 @@ public class Jogo {
 	 */
 	public void rolarDados() {
 
-		// TODA VEZ QUE O USUÁRIO CLICAR NO DADO DESENHADO NA INTERFACE GRÁFICA,
+		// TODA VEZ QUE O USURIO CLICAR NO DADO DESENHADO NA INTERFACE GRÁFICA,
 		// ESTE MÉTODO SERÁ INVOCADO.
 
 		// dados são rolados, há não ser que já foram rolados no atual turno
@@ -243,6 +243,11 @@ public class Jogo {
 								peca.mover(proximaCasa);
 								moved = true; // faz sair do loop, o movimento foi feito
 							}
+							if(peca.equals(pecaProxima))
+							{
+								peca.mover(proximaCasa);
+								moved = true; // faz sair do loop, o movimento foi feito
+							}
 							// caso seja do mesmo jogador, nada acontece
 							else
 								return;
@@ -318,8 +323,8 @@ public class Jogo {
 						// caso negativo, ele perde a vez
 						else {
 							for (Peca pecaDoPlayer : player.getPecas()) {
-								Casa casaDaPeça = pecaDoPlayer.getCasa();
-								if (!casaDaPeça.pertenceGuarita() && !casaDaPeça.ehCasaFinal())
+								Casa casaDaPeca = pecaDoPlayer.getCasa();
+								if (!casaDaPeca.pertenceGuarita() && !casaDaPeca.ehCasaFinal())
 									return;
 							}
 							moved = true;
