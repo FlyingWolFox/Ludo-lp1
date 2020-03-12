@@ -1,27 +1,64 @@
 import java.util.ArrayList;
 
-public class Castelo extends Peca {
+public class Castelo {
 
-    ArrayList<Peca> pecas;
+    // Cor da peça
+    private final String cor;
 
-    public Castelo(Peca peca1, Peca peca2, String cor) {
-        super(cor);
-        this.pecas = new ArrayList<Peca>();
-        pecas.add(peca1);
-        pecas.add(peca1);
+    // Casa na qual a peça se encontra
+    private Casa casa;
+
+    private ArrayList<Castelo> castelo;
+
+    public Castelo(String cor) {
+        this.cor = cor;
+        this.casa = null;
+        this.castelo = new ArrayList<Castelo>();
     }
 
-    public void adicionarPeca(Peca peca)
-    {
-        pecas.add(peca);
+    public void adicionarPeca(Castelo peca) {
+        castelo.add(peca);
     }
 
-    public void mover(Casa casaDestino)
-    {
-        for (Peca peca : pecas)
-        {
-            peca.mover(casaDestino);
+    /**
+     * Cor da peça.
+     * 
+     * @return Cor da peça.
+     */
+    public String getCor() {
+        return cor;
+    }
+
+    /**
+     * Casa na qual a peça se encontra.
+     * 
+     * @return Casa na qual a peça se encontra.
+     */
+    public Casa getCasa() {
+        return casa;
+    }
+
+    /**
+     * Retira a peça da casa atual e coloca-a na casa de destino.
+     * 
+     * @param casaDestino
+     */
+    public void moverPeca(Casa casaDestino) {
+        if (casa != null) {
+            casa.setCastelo(null);
         }
-        super.mover(casaDestino);
+        casaDestino.setCastelo(this);
+        casa = casaDestino;
+    }
+
+    public void mover(Casa casaDestino) {
+        for (Castelo peca : castelo) {
+            peca.moverPeca(casaDestino);
+        }
+        this.casa = casaDestino;
+    }
+
+    public int getQtDePecas() {
+        return castelo.size();
     }
 }

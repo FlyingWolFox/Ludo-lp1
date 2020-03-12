@@ -86,22 +86,22 @@ public class Jogo {
 
 		// Colocando as peças nas suas respectivas guaritas
 		for (Casa casaGuarita : guaritaVermelha.getTodasAsCasas()) {
-			Peca novaPeca = new Peca("VERMELHO");
+			Castelo novaPeca = new Castelo("VERMELHO");
 			novaPeca.mover(casaGuarita);
 		}
 
 		for (Casa casaGuarita : guaritaVerde.getTodasAsCasas()) {
-			Peca novaPeca = new Peca("VERDE");
+			Castelo novaPeca = new Castelo("VERDE");
 			novaPeca.mover(casaGuarita);
 		}
 
 		for (Casa casaGuarita : guaritaAzul.getTodasAsCasas()) {
-			Peca novaPeca = new Peca("AZUL");
+			Castelo novaPeca = new Castelo("AZUL");
 			novaPeca.mover(casaGuarita);
 		}
 
 		for (Casa casaGuarita : guaritaAmarela.getTodasAsCasas()) {
-			Peca novaPeca = new Peca("AMARELO");
+			Castelo novaPeca = new Castelo("AMARELO");
 			novaPeca.mover(casaGuarita);
 		}
 
@@ -161,7 +161,7 @@ public class Jogo {
 		}
 
 		// Perguntamos à casa qual é a peça.
-		Peca peca = casa.getPeca();
+		Castelo peca = casa.getPeca();
 		// Pegamos o jogador da vez
 		Player player = players.get(turnManager.getWhoIsNow());
 		// verificamos se a peça perternce ao jogador da vez
@@ -232,7 +232,7 @@ public class Jogo {
 					// o movimento é normal
 					if (!proximaCasa.ehCasaFinal()) {
 						// Finalmente, a variável casaN contém a casa que a peça deve ser inserida.
-						Peca pecaProxima = proximaCasa.getPeca();
+						Castelo pecaProxima = proximaCasa.getPeca();
 						// caso tenha uma peça na casa de destino:
 						if (pecaProxima != null) {
 							// se for de outro jogador, capture ela
@@ -301,7 +301,7 @@ public class Jogo {
 							proximaCasa = tabuleiro.getCasaInicio(player.getColor());
 
 							// verifica se há uma peça na casa inicial
-							Peca pecaProxima = proximaCasa.getPeca();
+							Castelo pecaProxima = proximaCasa.getPeca();
 							if (pecaProxima != null) {
 								// caso não seja do mesmo jogador que estiver saindo, deve-se haver a captura
 								if (!player.isThisPlayer(pecaProxima)) {
@@ -327,7 +327,7 @@ public class Jogo {
 						// verifica se o jogador pode mover outra peça. Caso positivo o jogo não anda,
 						// caso negativo, ele perde a vez
 						else {
-							for (Peca pecaDoPlayer : player.getPecas()) {
+							for (Castelo pecaDoPlayer : player.getCastelo()) {
 								Casa casaDaPeca = pecaDoPlayer.getCasa();
 								if (!casaDaPeca.pertenceGuarita() && !casaDaPeca.ehCasaFinal())
 									return;
@@ -364,7 +364,7 @@ public class Jogo {
 
 	public boolean estaTravado(Player jogador, Dado[] dados) {
 		int somaDados = dados[0].getValor() + dados[1].getValor();
-		for (Peca peca : jogador.getPecas()) {
+		for (Castelo peca : jogador.getCastelo()) {
 			Casa proximaCasa = peca.getCasa();
 			if (!peca.getCasa().ehCasaFinal() && !peca.getCasa().pertenceGuarita()) {
 				boolean curupira = false;
@@ -416,7 +416,7 @@ public class Jogo {
 				if (dados[0].getValor() == dados[1].getValor()) {
 					// verifica se há uma peça na casa inicial
 					proximaCasa = tabuleiro.getCasaInicio(jogador.getColor());
-					Peca pecaProxima = proximaCasa.getPeca();
+					Castelo pecaProxima = proximaCasa.getPeca();
 					if (pecaProxima != null) {
 						if (!jogador.isThisPlayer(pecaProxima)) {
 							return false;

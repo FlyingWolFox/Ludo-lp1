@@ -22,18 +22,19 @@ public class Tabuleiro {
      * Construtor padrão de um tabuleiro.
      */
     public Tabuleiro() {
-        guaritaAmarelo = new Guarita("AMARELO");
-        guaritaAzul = new Guarita("AZUL");
-        guaritaVerde = new Guarita("VERDE");
-        guaritaVermelho = new Guarita("VERMELHO");
-
-        // Inicializamos um tabuleiro de Ludo
 
         // Casas de Inicio
         casaInicioAmarelo = new Casa("AMARELO");
         casaInicioAzul = new Casa("AZUL");
         casaInicioVerde = new Casa("VERDE");
         casaInicioVermelho = new Casa("VERMELHO");
+
+        guaritaAmarelo = new Guarita("AMARELO", casaInicioAmarelo);
+        guaritaAzul = new Guarita("AZUL", casaInicioAzul);
+        guaritaVerde = new Guarita("VERDE", casaInicioVerde);
+        guaritaVermelho = new Guarita("VERMELHO", casaInicioVermelho);
+
+        // Inicializamos um tabuleiro de Ludo
 
         // Casas comuns
         // Usaremos uma espécie de lista encadeada informal para guardar as casas.

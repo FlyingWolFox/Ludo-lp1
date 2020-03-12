@@ -10,14 +10,16 @@ import java.util.Arrays;
 public class Guarita {
     private final Casa[] casas;
     private final String cor;
+    private final Casa casaInicio;
 
     /**
      * Inicializa a guarita vazia.
      * 
      * @param cor Cor
      */
-    public Guarita(String cor) {
+    public Guarita(String cor, Casa casaInicio) {
         this.cor = cor;
+        this.casaInicio = casaInicio;
         this.casas = new Casa[] { new Casa(this), new Casa(this), new Casa(this), new Casa(this) };
     }
 
@@ -61,5 +63,9 @@ public class Guarita {
      */
     public String getCor() {
         return cor;
+    }
+
+    public Casa getCasaInicio() {
+        return casaInicio;
     }
 }
