@@ -85,22 +85,22 @@ public class Jogo {
 		guaritaAmarela = tabuleiro.getGuarita("AMARELO");
 
 		// Colocando as peças nas suas respectivas guaritas
-		for (Casa casaGuarita : guaritaVermelha.getTodasAsCasas()) {
+		for (CasaGuarita casaGuarita : guaritaVermelha.getTodasAsCasas()) {
 			Castelo novaPeca = new Castelo("VERMELHO");
 			novaPeca.mover(casaGuarita);
 		}
 
-		for (Casa casaGuarita : guaritaVerde.getTodasAsCasas()) {
+		for (CasaGuarita casaGuarita : guaritaVerde.getTodasAsCasas()) {
 			Castelo novaPeca = new Castelo("VERDE");
 			novaPeca.mover(casaGuarita);
 		}
 
-		for (Casa casaGuarita : guaritaAzul.getTodasAsCasas()) {
+		for (CasaGuarita casaGuarita : guaritaAzul.getTodasAsCasas()) {
 			Castelo novaPeca = new Castelo("AZUL");
 			novaPeca.mover(casaGuarita);
 		}
 
-		for (Casa casaGuarita : guaritaAmarela.getTodasAsCasas()) {
+		for (CasaGuarita casaGuarita : guaritaAmarela.getTodasAsCasas()) {
 			Castelo novaPeca = new Castelo("AMARELO");
 			novaPeca.mover(casaGuarita);
 		}

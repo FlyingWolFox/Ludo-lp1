@@ -7,10 +7,10 @@
 public class Tabuleiro {
 
     // Armazena as casas de início das diferentes cores.
-    private Casa casaInicioAmarelo;
-    private Casa casaInicioAzul;
-    private Casa casaInicioVerde;
-    private Casa casaInicioVermelho;
+    private CasaComum casaInicioAmarelo;
+    private CasaComum casaInicioAzul;
+    private CasaComum casaInicioVerde;
+    private CasaComum casaInicioVermelho;
 
     // Armazena as guaritas do tabuleiro.
     private Guarita guaritaAmarelo;

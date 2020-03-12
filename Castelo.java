@@ -8,16 +8,16 @@ public class Castelo {
     // Casa na qual a peça se encontra
     private Casa casa;
 
-    private ArrayList<Castelo> castelo;
+    private int nivel;
 
     public Castelo(String cor) {
         this.cor = cor;
         this.casa = null;
-        this.castelo = new ArrayList<Castelo>();
+        this.nivel = 1;
     }
 
-    public void adicionarPeca(Castelo peca) {
-        castelo.add(peca);
+    public void adicionarPeca() {
+        nivel++;
     }
 
     /**
@@ -43,7 +43,7 @@ public class Castelo {
      * 
      * @param casaDestino
      */
-    public void moverPeca(Casa casaDestino) {
+    public void mover(Casa casaDestino) {
         if (casa != null) {
             casa.setCastelo(null);
         }
@@ -51,14 +51,7 @@ public class Castelo {
         casa = casaDestino;
     }
 
-    public void mover(Casa casaDestino) {
-        for (Castelo peca : castelo) {
-            peca.moverPeca(casaDestino);
-        }
-        this.casa = casaDestino;
-    }
-
-    public int getQtDePecas() {
-        return castelo.size();
+    public int getNivel() {
+        return nivel;
     }
 }

@@ -95,7 +95,7 @@ public abstract class Casa {
         if (castelo == null) {
             this.qtdePecas = 0;
         } else {
-            this.qtdePecas = castelo.getQtDePecas();
+            this.qtdePecas = castelo.getNivel();
         }
         return r;
     }
