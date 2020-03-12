@@ -187,39 +187,7 @@ public class Jogo {
 			// nas casas seguras
 			boolean curupira = false;
 			for (int i = 0; i < somaDados && proximaCasa != null; i++) {
-				// caso a peça esteja na entrada da casa segura
-				// ele entra lá
-				if (proximaCasa.ehEntradaZonaSegura() && (proximaCasa.getCasaSegura().getCor() == peca.getCor()))
-					proximaCasa = proximaCasa.getCasaSegura();
-				// caso a peça já esteja na casa final
-				// isso vai acionar curupira e faz a peça
-				// andar para trás
-				else if (proximaCasa.ehCasaFinal()) {
-					// caso a peça já esteja na casa final
-					// não há nada há fazer
-					if (i == 0) {
-						proximaCasa = null;
-						break;
-					}
-					curupira = true;
-					proximaCasa = proximaCasa.getCasaAnterior();
-
-				}
-				// faz a peça retroceder até a primeira casa segura
-				// caso a peça "passou direto" pela casa final
-				else if (curupira && proximaCasa.getCasaAnterior() != null)
-					proximaCasa = proximaCasa.getCasaAnterior();
-				// a peça atingiu a primeira casa segura,
-				// curupira é desacionar curupira, para
-				// a peça voltar a se mover para frente
-				else if (curupira && proximaCasa.getCasaAnterior() == null) {
-					proximaCasa = proximaCasa.getCasaSeguinte();
-					curupira = false;
-				}
-				// em nenhum caso especial, a peça se move normalmente
-				else
-					proximaCasa = proximaCasa.getCasaSeguinte();
-
+				proximaCasa = proximaCasa.proximaCasa(peca, curupira);
 			}
 
 			// o jogo não continua a execução enquanto uma peça

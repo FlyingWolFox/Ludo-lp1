@@ -5,7 +5,7 @@ public class CasaSegura extends Casa {
         super(cor, anterior);
     }
 
-    public Casa proximaCasa(Castelo castelo, boolean curupira) {
+    public Casa proximaCasa(Castelo castelo, boolean curupira, Dado[] dados) {
         if (curupira) {
             if (super.getCasaAnterior() != null)
                 return super.getCasaAnterior();
@@ -19,5 +19,10 @@ public class CasaSegura extends Casa {
             return super.getCasaAnterior();
         }
         return super.getCasaSeguinte();
+    }
+
+    public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar)
+    {
+        
     }
 }
