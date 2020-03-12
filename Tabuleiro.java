@@ -24,10 +24,10 @@ public class Tabuleiro {
     public Tabuleiro() {
 
         // Casas de Inicio
-        casaInicioAmarelo = new Casa("AMARELO");
-        casaInicioAzul = new Casa("AZUL");
-        casaInicioVerde = new Casa("VERDE");
-        casaInicioVermelho = new Casa("VERMELHO");
+        casaInicioAmarelo = new CasaComum("AMARELO");
+        casaInicioAzul = new CasaComum("AZUL");
+        casaInicioVerde = new CasaComum("VERDE");
+        casaInicioVermelho = new CasaComum("VERMELHO");
 
         guaritaAmarelo = new Guarita("AMARELO", casaInicioAmarelo);
         guaritaAzul = new Guarita("AZUL", casaInicioAzul);
@@ -53,11 +53,12 @@ public class Tabuleiro {
     private void popularCasas(Casa primeiraCasa, Casa ultimaCasa) {
         Casa casa = primeiraCasa;
         for (int i = 0; i < 12; i++) {
-            Casa casaSeguinte = new Casa();
+            Casa casaSeguinte = new CasaComum();
             casa.setCasaSeguinte(casaSeguinte);
             casa = casaSeguinte;
 
             if (i == 10) {
+                casa = new CasaEntrada();
                 criarCasasZonaSegura(casa, ultimaCasa.getCor());
             }
         }
@@ -72,10 +73,10 @@ public class Tabuleiro {
      * @param cor
      */
     private void criarCasasZonaSegura(Casa casaEntradaZonaSegura, String cor) {
-        Casa casaZonaSegura = new Casa(cor);
+        Casa casaZonaSegura = new CasaSegura(cor, null);
         casaEntradaZonaSegura.setCasaSegura(casaZonaSegura);
         for (int i = 0; i < 5; i++) {
-            Casa casaNova = new Casa(cor, casaZonaSegura);
+            Casa casaNova = new CasaSegura(cor, casaZonaSegura);
             casaZonaSegura.setCasaSeguinte(casaNova);
             casaZonaSegura = casaNova;
         }

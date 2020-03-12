@@ -5,8 +5,11 @@ public class CasaComum extends Casa {
         super();
     }
 
-    public Casa proximaCasa(Castelo castelo, boolean curupira)
-    {
+    public CasaComum(String cor) {
+        super(cor);
+    }
+
+    public Casa proximaCasa(Castelo castelo, boolean curupira) {
         return super.getCasaSeguinte();
     }
 }
