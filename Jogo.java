@@ -48,7 +48,7 @@ public class Jogo {
 
 		for (int i = 0; i < this.dados.length; i++) {
 			// remover parâmetro do construtor para dado não batizado
-			this.dados[i] = new Dado(i);
+			this.dados[i] = new Dado();
 		}
 
 		inicializaJogo();
