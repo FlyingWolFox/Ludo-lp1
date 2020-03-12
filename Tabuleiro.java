@@ -54,14 +54,15 @@ public class Tabuleiro {
         Casa casa = primeiraCasa;
         for (int i = 0; i < 12; i++) {
             Casa casaSeguinte = new CasaComum();
-            casa.setCasaSeguinte(casaSeguinte);
-            casa = casaSeguinte;
+            casa.setCasaSeguinte(casaSeguinte);            
 
             if (i == 10) {
                 casaSeguinte = new CasaEntrada(ultimaCasa.getCor());
+                casa.setCasaSeguinte(casaSeguinte);
                 casa = casaSeguinte;
                 criarCasasZonaSegura(casa, ultimaCasa.getCor());
             }
+            casa = casaSeguinte;
         }
         casa.setCasaSeguinte(ultimaCasa);
     }
