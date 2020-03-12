@@ -58,7 +58,8 @@ public class Tabuleiro {
             casa = casaSeguinte;
 
             if (i == 10) {
-                casa = new CasaEntrada();
+                casaSeguinte = new CasaEntrada(ultimaCasa.getCor());
+                casa = casaSeguinte;
                 criarCasasZonaSegura(casa, ultimaCasa.getCor());
             }
         }

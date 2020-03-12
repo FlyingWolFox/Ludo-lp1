@@ -3,9 +3,9 @@ public class CasaEntrada extends Casa {
 
     private String corDaEntrada;
 
-    public CasaEntrada() {
+    public CasaEntrada(String corDaZonaSegura) {
         super();
-        corDaEntrada = super.getCasaSegura().getCor();
+        corDaEntrada = corDaZonaSegura;
     }
 
     public Casa proximaCasa(Castelo castelo, boolean curupira) {
