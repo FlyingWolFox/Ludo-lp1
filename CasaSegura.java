@@ -16,10 +16,10 @@ public class CasaSegura extends Casa {
         
         if (curupira) {
             if (super.getCasaAnterior() != null)
-                return super.getCasaAnterior().proximaCasa(castelo, curupira, movimentos);
+                return super.getCasaAnterior().proximaCasa(castelo, curupira, movimentos - 1);
             else {
                 curupira = false;
-                return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos);
+                return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos - 1);
             }
         }
 
@@ -27,7 +27,7 @@ public class CasaSegura extends Casa {
             return this;
         }
 
-        return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos);
+        return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos - 1);
     }
 
     public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar)
@@ -36,16 +36,16 @@ public class CasaSegura extends Casa {
         {
             if (curupira) {
                 if (super.getCasaAnterior() != null)
-                    return super.getCasaAnterior().proximaCasa(castelo, curupira, casasAAndar);
+                    return super.getCasaAnterior().proximaCasa(castelo, curupira, casasAAndar - 1);
                 else {
                     curupira = false;
-                    return super.getCasaSeguinte().proximaCasa(castelo, curupira, casasAAndar);
+                    return super.getCasaSeguinte().proximaCasa(castelo, curupira, casasAAndar - 1);
                 }
             }
     
             if (super.ehCasaFinal()) {
                 curupira = true;
-                return super.getCasaAnterior().proximaCasa(castelo, curupira, casasAAndar);
+                return super.getCasaAnterior().proximaCasa(castelo, curupira, casasAAndar - 1);
             }
         }
 

@@ -16,19 +16,19 @@ public class CasaEntrada extends Casa {
 			movimentos = Math.min(dados[0].getValor(), dados[1].getValor());
 
 		if (castelo.getCor() == corDaEntrada) {
-			return super.getCasaSegura().proximaCasa(castelo, curupira, movimentos);
+			return super.getCasaSegura().proximaCasa(castelo, curupira, movimentos - 1);
 		}
 
-		return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos);
+		return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos - 1);
 	}
 
 	public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar) {
 		if (casasAAndar > 0) {
 			if (castelo.getCor() == corDaEntrada) {
-				return super.getCasaSegura().proximaCasa(castelo, curupira, casasAAndar);
+				return super.getCasaSegura().proximaCasa(castelo, curupira, casasAAndar - 1);
 			}
-			
-			return super.getCasaSeguinte().proximaCasa(castelo, curupira, casasAAndar);
+
+			return super.getCasaSeguinte().proximaCasa(castelo, curupira, casasAAndar - 1);
 		}
 
 		return this;

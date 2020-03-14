@@ -17,7 +17,7 @@ public class CasaComum extends Casa {
 		else
 			movimentos = Math.min(dados[0].getValor(), dados[1].getValor());
 
-		return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos);
+		return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos - 1);
 	}
 
 	public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar) {
