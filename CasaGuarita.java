@@ -8,11 +8,11 @@ public class CasaGuarita extends Casa {
     public Casa proximaCasa(Castelo castelo, boolean curupira, Dado[] dados) {
         if(dados[0].getValor() == dados[1].getValor())
             return super.getGuarita().getCasaInicio();
-        return null;
+        return this;
     }
 
     public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar)
     {
-        return null;
+        return this;
     }
 }

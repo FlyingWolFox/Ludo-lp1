@@ -187,7 +187,7 @@ public class Jogo {
 			// nas casas seguras
 			boolean curupira = false;
 			for (int i = 0; i < somaDados && proximaCasa != null; i++) {
-				proximaCasa = proximaCasa.proximaCasa(peca, curupira);
+				proximaCasa = proximaCasa.proximaCasa(peca, curupira, dados);
 			}
 
 			// o jogo não continua a execução enquanto uma peça
@@ -274,7 +274,7 @@ public class Jogo {
 								// caso não seja do mesmo jogador que estiver saindo, deve-se haver a captura
 								if (!player.isThisPlayer(pecaProxima)) {
 									Guarita pecaRetorno = tabuleiro.getGuarita(pecaProxima.getCor());
-									for (Casa casaGuarita : pecaRetorno.getTodasAsCasas()) {
+									for (CasaGuarita casaGuarita : pecaRetorno.getTodasAsCasas()) {
 										if (!casaGuarita.possuiPeca()) {
 											pecaProxima.mover(casaGuarita);
 										}

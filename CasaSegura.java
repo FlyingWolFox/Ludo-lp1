@@ -1,28 +1,54 @@
 
-public class CasaSegura extends Casa {
 
+
+public class CasaSegura extends Casa {
+    private int movimentos;
+    
     public CasaSegura(String cor, Casa anterior) {
         super(cor, anterior);
     }
 
     public Casa proximaCasa(Castelo castelo, boolean curupira, Dado[] dados) {
+        if(castelo.getNivel() == 1)
+            movimentos = dados[0].getValor() + dados[1].getValor();
+        else
+            movimentos = Math.min(dados[0].getValor(), dados[1].getValor());
+        
         if (curupira) {
             if (super.getCasaAnterior() != null)
-                return super.getCasaAnterior();
+                return super.getCasaAnterior().proximaCasa(castelo, curupira, movimentos);
             else {
                 curupira = false;
-                return super.getCasaSeguinte();
+                return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos);
             }
         }
+
         if (super.ehCasaFinal()) {
-            curupira = true;
-            return super.getCasaAnterior();
+            return this;
         }
-        return super.getCasaSeguinte();
+
+        return super.getCasaSeguinte().proximaCasa(castelo, curupira, movimentos);
     }
 
     public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar)
     {
-        
+        if (casasAAndar > 0)
+        {
+            if (curupira) {
+                if (super.getCasaAnterior() != null)
+                    return super.getCasaAnterior().proximaCasa(castelo, curupira, casasAAndar);
+                else {
+                    curupira = false;
+                    return super.getCasaSeguinte().proximaCasa(castelo, curupira, casasAAndar);
+                }
+            }
+    
+            if (super.ehCasaFinal()) {
+                curupira = true;
+                return super.getCasaAnterior().proximaCasa(castelo, curupira, casasAAndar);
+            }
+        }
+
+        return this;
     }
 }
