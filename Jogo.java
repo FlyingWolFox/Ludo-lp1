@@ -161,12 +161,12 @@ public class Jogo {
 		}
 
 		// Perguntamos à casa qual é a peça.
-		Castelo peca = casa.getPeca();
+		Castelo castelo = casa.getPeca();
 		// Pegamos o jogador da vez
 		Player player = players.get(turnManager.getWhoIsNow());
 		// verificamos se a peça perternce ao jogador da vez
 		// se não for, a peça não se move e o jogo não continua
-		if (player.isThisPlayer(peca)) {
+		if (player.isThisPlayer(castelo)) {
 
 			if (estaTravado(player, dados)) {
 				turnManager.next();
@@ -174,21 +174,13 @@ public class Jogo {
 				return;
 			}
 
-			// Percorremos cada dado, somando o valor nele à variável somaDados.
-			int somaDados = 0;
-			for (Dado dado : dados) {
-				somaDados += dado.getValor();
-			}
-
-			// Percorreremos N casas.
-			Casa proximaCasa = casa;
 			// curupira controla se a peça
 			// andará para frente ou para trás,
 			// nas casas seguras
 			boolean curupira = false;
-			for (int i = 0; i < somaDados && proximaCasa != null; i++) {
-				proximaCasa = proximaCasa.proximaCasa(peca, curupira, dados);
-			}
+
+			// Percorreremos N casas.
+			Casa proximaCasa = casa.proximaCasa(castelo, curupira, dados);
 
 			// o jogo não continua a execução enquanto uma peça
 			// do jogador da vez não se mecheu (moved == true)
@@ -214,11 +206,11 @@ public class Jogo {
 										pecaProxima.mover(casaGuarita);
 									}
 								}
-								peca.mover(proximaCasa);
+								castelo.mover(proximaCasa);
 								moved = true; // faz sair do loop, o movimento foi feito
 							}
-							if (peca.equals(pecaProxima)) {
-								peca.mover(proximaCasa);
+							if (castelo.equals(pecaProxima)) {
+								castelo.mover(proximaCasa);
 								moved = true; // faz sair do loop, o movimento foi feito
 							}
 							// caso seja do mesmo jogador, nada acontece
@@ -228,7 +220,7 @@ public class Jogo {
 						// caso não haja peça na casa de destino
 						// a peça vai até lá
 						else {
-							peca.mover(proximaCasa); // move a peça
+							castelo.mover(proximaCasa); // move a peça
 							moved = true; // faz sair do loop, o movimento foi feito
 						}
 					}
@@ -237,7 +229,7 @@ public class Jogo {
 					// e aumentar o número de peças na casa
 					if (proximaCasa.ehCasaFinal()) {
 						int qtDePecas = proximaCasa.getQuantidadePecas();
-						peca.mover(proximaCasa);
+						castelo.mover(proximaCasa);
 						qtDePecas++;
 						proximaCasa.setQuantidadePecas(qtDePecas);
 						// caso haja 4 peças na casa final, o jogador venceu!
@@ -279,7 +271,7 @@ public class Jogo {
 											pecaProxima.mover(casaGuarita);
 										}
 									}
-									peca.mover(proximaCasa);
+									castelo.mover(proximaCasa);
 									moved = true; // faz sair do loop, o movimento foi feito
 								}
 								// caso seja, nada acontece
@@ -288,7 +280,7 @@ public class Jogo {
 							}
 							// caso não haja nenhuma peça, o movimento é normal e a peça sai da guarita
 							else {
-								peca.mover(proximaCasa); // move a peça
+								castelo.mover(proximaCasa); // move a peça
 								moved = true; // faz sair do loop, o movimento foi feito
 							}
 						}
