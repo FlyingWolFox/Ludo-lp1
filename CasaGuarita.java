@@ -13,6 +13,7 @@ public class CasaGuarita extends Casa {
 
     public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar)
     {
+        // shall never be reached
         return this;
     }
 }

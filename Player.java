@@ -8,7 +8,8 @@ import java.util.*;
 public class Player {
 
     private int number; // número da vez do jogador, 0 - 3
-    private ArrayList<Castelo> castelo; // peças que correspondem ao jogador
+    private ArrayList<Castelo> castelos; // peças que correspondem ao jogador
+    private Guarita guarita;
     private String color; // cor da guarita
 
     /**
@@ -21,9 +22,11 @@ public class Player {
     public Player(int number, Casa[] casaDaGuarita, String color) {
         this.number = number;
         this.color = color;
-        this.castelo = new ArrayList<Castelo>();
+        this.guarita = casaDaGuarita[0].getGuarita();
+        this.castelos = new ArrayList<Castelo>();
         for (Casa casa : casaDaGuarita) {
-            this.castelo.add(casa.getPeca());
+            this.castelos.add(casa.getPeca());
+            casa.getPeca().setPlayer(this);
         }
     }
 
@@ -46,7 +49,7 @@ public class Player {
     }
 
     public ArrayList<Castelo> getCastelo(){
-        return castelo;
+        return castelos;
     }
 
     /**
@@ -56,6 +59,24 @@ public class Player {
      * @return true se a peça for do jogador, false caso contrário
      */
     public boolean isThisPlayer(Castelo castelo) {
-        return this.castelo.contains(castelo);
+        return this.castelos.contains(castelo);
+    }
+
+    public Casa retornarGuaritaLivre() {
+        for (Casa casa : guarita.getTodasAsCasas()) {
+            if (!casa.possuiPeca())
+                return casa;
+        }
+
+        // shall never be reached
+        return null;
+    }
+
+    public void removerCastelo(Castelo castelo) {
+        castelos.remove(castelo);
+    }
+
+    public void adicionarCastelo(Castelo castelo) {
+        castelos.add(castelo);
     }
 }

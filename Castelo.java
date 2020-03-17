@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class Castelo {
 
@@ -8,6 +7,7 @@ public class Castelo {
     // Casa na qual a peça se encontra
     private Casa casa;
 
+    private Player player;
     private int nivel;
 
     public Castelo(String cor) {
@@ -16,8 +16,12 @@ public class Castelo {
         this.nivel = 1;
     }
 
-    public void adicionarPeca() {
-        nivel++;
+    public Castelo(String cor, Player player) {
+        this.cor = cor;
+        this.casa = null;
+        this.nivel = 1;
+        this.player = player;
+        player.adicionarCastelo(this);
     }
 
     /**
@@ -47,11 +51,40 @@ public class Castelo {
         if (casa != null) {
             casa.setCastelo(null);
         }
+
+        if (casa.possuiPeca() && !this.equals(casa.getPeca())) {
+            Castelo casteloCasa = casa.getPeca();
+            if (player.isThisPlayer(casteloCasa)) {
+                player.removerCastelo(casteloCasa);
+                nivel++;
+            }
+            if (!player.isThisPlayer(casteloCasa)) {
+                casteloCasa.captured();
+            }
+        }
+
         casaDestino.setCastelo(this);
         casa = casaDestino;
     }
 
     public int getNivel() {
         return nivel;
+    }
+
+    public Castelo levelUP() {
+        nivel++;
+        return this;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void captured() {
+        for (int i = 1; i < nivel; i++) {
+            new Castelo(cor, player).mover(player.retornarGuaritaLivre());
+        }
+        this.nivel = 1;
+        this.mover(player.retornarGuaritaLivre());
     }
 }

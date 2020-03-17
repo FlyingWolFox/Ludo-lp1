@@ -302,6 +302,9 @@ public class Jogo {
 					}
 				}
 			}
+
+			//TODO: win verfication
+
 			// permite que os dados sejam rolados de novo
 			// já que, como a peça já se mecheu, o próximo turno vai começar
 			dadosRolados = false;
