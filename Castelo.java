@@ -52,14 +52,16 @@ public class Castelo {
             casa.setCastelo(null);
         }
 
-        if (casa.possuiPeca() && !this.equals(casa.getPeca())) {
-            Castelo casteloCasa = casa.getPeca();
-            if (player.isThisPlayer(casteloCasa)) {
-                player.removerCastelo(casteloCasa);
-                nivel++;
-            }
-            if (!player.isThisPlayer(casteloCasa)) {
-                casteloCasa.captured();
+        if (casa.possuiPeca()) {
+            if (!this.equals(casa.getPeca())) {
+                Castelo casteloCasa = casa.getPeca();
+                if (player.isThisPlayer(casteloCasa)) {
+                    player.removerCastelo(casteloCasa);
+                    nivel++;
+                }
+                if (!player.isThisPlayer(casteloCasa)) {
+                    casteloCasa.captured();
+                }
             }
         }
 
