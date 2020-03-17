@@ -4,6 +4,7 @@
  * @author Alan Moraes / alan@ci.ufpb.br
  * @author Victor Koehler / koehlervictor@cc.ci.ufpb.br
  */
+import java.util.ArrayList;
 public class Tabuleiro {
 
     // Armazena as casas de início das diferentes cores.
@@ -17,6 +18,8 @@ public class Tabuleiro {
     private Guarita guaritaAzul;
     private Guarita guaritaVerde;
     private Guarita guaritaVermelho;
+
+    private  ArrayList<Casa> casas_finais;
 
     /**
      * Construtor padrão de um tabuleiro.
@@ -33,6 +36,8 @@ public class Tabuleiro {
         guaritaAzul = new Guarita("AZUL", casaInicioAzul);
         guaritaVerde = new Guarita("VERDE", casaInicioVerde);
         guaritaVermelho = new Guarita("VERMELHO", casaInicioVermelho);
+
+        casas_finais = new  ArrayList<Casa>();
 
         // Inicializamos um tabuleiro de Ludo
 
@@ -82,6 +87,7 @@ public class Tabuleiro {
             casaZonaSegura.setCasaSeguinte(casaNova);
             casaZonaSegura = casaNova;
         }
+        casas_finais.add(casaZonaSegura);
     }
 
     /**
@@ -127,4 +133,15 @@ public class Tabuleiro {
         }
     }
 
+    public ArrayList<Casa> getCasasFinais() {
+        return casas_finais;
+    }
+
+    public boolean ehVitoria() {
+        for (Casa casa : casas_finais) {
+            if (casa.getPeca().getNivel() == 4)
+                return true;
+        }
+        return false;
+    }
 }

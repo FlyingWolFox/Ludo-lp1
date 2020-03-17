@@ -23,6 +23,12 @@ public class TurnManager {
         return whoIsNow;
     }
 
+    public int getWhoWasBefore() {
+        if (whoIsNow > 0)
+            return whoIsNow - 1;
+        return 3;
+    }
+
     /**
      * Passa o turno para o próximo jogador
      */

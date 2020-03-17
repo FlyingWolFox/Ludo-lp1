@@ -303,7 +303,19 @@ public class Jogo {
 				}
 			}
 
-			//TODO: win verfication
+			// TODO: capture verification
+
+			// TODO: win verfication
+
+			if (proximaCasa.ehCasaFinal()) {
+				if (castelo.getNivel() == 4) {
+					// mostra uma caixa de diálogo, mostrando quem venceu
+					showMessageDialog(null, proximaCasa.getCor() + " venceu!");
+					// ativa o gatilho do item do menu Arquivo, Novo, efetivamente reiniciando o
+					// jogo
+					menuNovo.doClick();
+				}
+			}
 
 			// permite que os dados sejam rolados de novo
 			// já que, como a peça já se mecheu, o próximo turno vai começar
@@ -322,6 +334,11 @@ public class Jogo {
 	 */
 	public String getJogadorDaVez() {
 		Player player = players.get(turnManager.getWhoIsNow());
+		return player.getColor();
+	}
+
+	public String getJogadorAnterior() {
+		Player player = players.get(turnManager.getWhoWasBefore());
 		return player.getColor();
 	}
 
