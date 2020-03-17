@@ -1,6 +1,3 @@
-
-
-
 public class CasaSegura extends Casa {
     private int movimentos;
     
