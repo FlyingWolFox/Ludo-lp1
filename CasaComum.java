@@ -21,8 +21,17 @@ public class CasaComum extends Casa {
 	}
 
 	public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar) {
+		
+		if (this.possuiPeca()) {
+			if (this.getPeca().getNivel() > castelo.getNivel() && this.getPeca().getCor() != castelo.getCor())
+				return super.getCasaAnterior();
+		}
+		
+		
 		if (casasAAndar > 0)
 			return super.getCasaSeguinte().proximaCasa(castelo, curupira, casasAAndar - 1);
+		
 		return this;
+
 	}
 }
