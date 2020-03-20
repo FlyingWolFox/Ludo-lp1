@@ -1,3 +1,4 @@
+
 /**
  * Representa o tabuleiro do jogo.
  * 
@@ -5,6 +6,7 @@
  * @author Victor Koehler / koehlervictor@cc.ci.ufpb.br
  */
 import java.util.ArrayList;
+
 public class Tabuleiro {
 
     // Armazena as casas de início das diferentes cores.
@@ -19,7 +21,7 @@ public class Tabuleiro {
     private Guarita guaritaVerde;
     private Guarita guaritaVermelho;
 
-    private  ArrayList<Casa> casas_finais;
+    private ArrayList<Casa> casas_finais;
 
     /**
      * Construtor padrão de um tabuleiro.
@@ -37,7 +39,7 @@ public class Tabuleiro {
         guaritaVerde = new Guarita("VERDE", casaInicioVerde);
         guaritaVermelho = new Guarita("VERMELHO", casaInicioVermelho);
 
-        casas_finais = new  ArrayList<Casa>();
+        casas_finais = new ArrayList<Casa>();
 
         // Inicializamos um tabuleiro de Ludo
 
@@ -59,7 +61,7 @@ public class Tabuleiro {
         Casa casa = primeiraCasa;
         for (int i = 0; i < 12; i++) {
             Casa casaSeguinte = new CasaComum();
-            casa.setCasaSeguinte(casaSeguinte);            
+            casa.setCasaSeguinte(casaSeguinte);
 
             if (i == 10) {
                 casaSeguinte = new CasaEntrada(ultimaCasa.getCor());
@@ -139,8 +141,10 @@ public class Tabuleiro {
 
     public boolean ehVitoria() {
         for (Casa casa : casas_finais) {
-            if (casa.getPeca().getNivel() == 4)
-                return true;
+            if (casa.possuiPeca()) {
+                if (casa.getPeca().getNivel() == 4)
+                    return true;
+            }
         }
         return false;
     }
