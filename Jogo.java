@@ -409,6 +409,15 @@ public class Jogo {
 		return true;
 	}
 
+	public boolean estaTravado2() {
+		ArrayList<Castelo> castelos = players.get(turnManager.getWhoIsNow()).getCastelo();
+		for (Castelo castelo : castelos) {
+			Casa casa = castelo.getCasa();
+			if (!casa.ehCasaFinal() && !casa.pertenceGuarita())
+				return false;
+		}
+		return true;
+	}
 	/**
 	 * O tabuleiro deste jogo.
 	 * 
