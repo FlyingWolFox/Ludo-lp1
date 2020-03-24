@@ -409,7 +409,7 @@ public class Jogo {
 		return true;
 	}
 
-	public boolean estaTravado2() {
+	public boolean estaTravado() {
 		ArrayList<Castelo> castelos = players.get(turnManager.getWhoIsNow()).getCastelo();
 		for (Castelo castelo : castelos) {
 			Casa casa = castelo.getCasa();
