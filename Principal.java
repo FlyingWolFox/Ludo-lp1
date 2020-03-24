@@ -176,25 +176,25 @@ public class Principal extends JFrame {
     private void carregarIconesECores() {
         cores.put("AMARELO", Color.YELLOW);
         // icones.put("AMARELO", carregarIcone("imagens/amarelo.png"));
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 5; i++) {
             icones.put("CASTELO" + i + "AMARELO", carregarIcone("imagens/castelo" + i + "amarelo.png"));
         }
 
         cores.put("AZUL", Color.BLUE);
         // icones.put("AZUL", carregarIcone("imagens/azul.png"));
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 5; i++) {
             icones.put("CASTELO" + i + "AZUL", carregarIcone("imagens/castelo" + i + "azul.png"));
         }
 
         cores.put("VERDE", Color.GREEN);
         // icones.put("VERDE", carregarIcone("imagens/verde.png"));
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 5; i++) {
             icones.put("CASTELO" + i + "VERDE", carregarIcone("imagens/castelo" + i + "verde.png"));
         }
 
         cores.put("VERMELHO", Color.RED);
         // icones.put("VERMELHO", carregarIcone("imagens/vermelho.png"));
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 5; i++) {
             icones.put("CASTELO" + i + "VERMELHO", carregarIcone("imagens/castelo" + i + "vermelho.png"));
         }
 
