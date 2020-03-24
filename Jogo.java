@@ -177,10 +177,20 @@ public class Jogo {
 			// curupira controla se a peça
 			// andará para frente ou para trás,
 			// nas casas seguras
-			boolean curupira = false;
+			boolean curupira;
 
 			// Percorreremos N casas.
-			Casa proximaCasa = casa.proximaCasa(castelo, curupira, dados);
+			Casa proximaCasa = casa.proximaCasa(castelo, curupira=false, dados);
+
+			if(casa.equals(proximaCasa))
+			{
+				ArrayList<Castelo> castelos = players.get(turnManager.getWhoIsNow()).getCastelo();
+				for (Castelo casteloJogador : castelos) {
+					Casa casaCastelo = casteloJogador.getCasa();
+					if(!casaCastelo.proximaCasa(castelo, curupira=false, dados).equals(casaCastelo))
+						return;
+				}
+			}
 
 			// o jogo não continua a execução enquanto uma peça
 			// do jogador da vez não se mecheu (moved == true)
@@ -409,15 +419,6 @@ public class Jogo {
 		return true;
 	}
 
-	public boolean estaTravado() {
-		ArrayList<Castelo> castelos = players.get(turnManager.getWhoIsNow()).getCastelo();
-		for (Castelo castelo : castelos) {
-			Casa casa = castelo.getCasa();
-			if (!casa.ehCasaFinal() && !casa.pertenceGuarita())
-				return false;
-		}
-		return true;
-	}
 	/**
 	 * O tabuleiro deste jogo.
 	 * 
