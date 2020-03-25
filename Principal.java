@@ -214,7 +214,6 @@ public class Principal extends JFrame {
             System.out.println("Não foi possível carregar os arquivos de imagens.");
             return null;
         }
-
     }
 
     /**

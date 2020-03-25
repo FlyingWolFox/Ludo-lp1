@@ -3,8 +3,6 @@
 import java.util.ArrayList;
 // Para poder reiniciar o jogo a partir do JMenuItem
 import javax.swing.JMenuItem;
-// Para exibir a caixa de diálogo de vitória
-import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Implementa as mecânicas e regras do jogo Ludo.
@@ -180,14 +178,13 @@ public class Jogo {
 			boolean curupira;
 
 			// Percorreremos N casas.
-			Casa proximaCasa = casa.proximaCasa(castelo, curupira=false, dados);
+			Casa proximaCasa = casa.proximaCasa(castelo, curupira = false, dados);
 
-			if(casa.equals(proximaCasa))
-			{
+			if (casa.equals(proximaCasa)) {
 				ArrayList<Castelo> castelos = players.get(turnManager.getWhoIsNow()).getCastelo();
 				for (Castelo casteloJogador : castelos) {
 					Casa casaCastelo = casteloJogador.getCasa();
-					if(!casaCastelo.proximaCasa(castelo, curupira=false, dados).equals(casaCastelo))
+					if (!casaCastelo.proximaCasa(castelo, curupira = false, dados).equals(casaCastelo))
 						return;
 				}
 			}

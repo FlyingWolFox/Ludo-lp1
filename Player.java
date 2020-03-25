@@ -48,7 +48,7 @@ public class Player {
         return color;
     }
 
-    public ArrayList<Castelo> getCastelo(){
+    public ArrayList<Castelo> getCastelo() {
         return castelos;
     }
 
