@@ -42,6 +42,8 @@ public class CasaSegura extends Casa {
                 curupira = true;
                 return super.getCasaAnterior().proximaCasa(castelo, curupira, casasAAndar - 1);
             }
+
+            return super.getCasaSeguinte().proximaCasa(castelo, curupira, casasAAndar - 1);
         }
 
         return this;
