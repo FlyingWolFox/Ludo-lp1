@@ -3,8 +3,6 @@
 import java.util.ArrayList;
 // Para poder reiniciar o jogo a partir do JMenuItem
 import javax.swing.JMenuItem;
-// Para exibir a caixa de diálogo de vitória
-import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Implementa as mecânicas e regras do jogo Ludo.
@@ -180,152 +178,18 @@ public class Jogo {
 			boolean curupira;
 
 			// Percorreremos N casas.
-			Casa proximaCasa = casa.proximaCasa(castelo, curupira=false, dados);
+			Casa proximaCasa = casa.proximaCasa(castelo, curupira = false, dados);
 
-			if(casa.equals(proximaCasa))
-			{
+			if (casa.equals(proximaCasa)) {
 				ArrayList<Castelo> castelos = players.get(turnManager.getWhoIsNow()).getCastelo();
 				for (Castelo casteloJogador : castelos) {
 					Casa casaCastelo = casteloJogador.getCasa();
-					if(!casaCastelo.proximaCasa(castelo, curupira=false, dados).equals(casaCastelo))
+					if (!casaCastelo.proximaCasa(castelo, curupira = false, dados).equals(casaCastelo))
 						return;
 				}
 			}
 
-			// o jogo não continua a execução enquanto uma peça
-			// do jogador da vez não se mecheu (moved == true)
-			for (boolean moved = false; !moved;) {
-
-				// se a próxima casa não for nula, mova a peça até lá
-				if (proximaCasa != null) {
-					// caso a próxima caso não seja final
-					// o movimento é normal
-					if (!proximaCasa.ehCasaFinal()) {
-						// Finalmente, a variável casaN contém a casa que a peça deve ser inserida.
-						Castelo pecaProxima = proximaCasa.getPeca();
-						// caso tenha uma peça na casa de destino:
-						if (pecaProxima != null) {
-							// se for de outro jogador, capture ela
-							// e a mande pra guarita
-							if (!player.isThisPlayer(pecaProxima)) {
-								// pega a peça que está na casa de destino
-								Guarita pecaRetorno = tabuleiro.getGuarita(pecaProxima.getCor());
-								// e a move para a guarita
-								for (Casa casaGuarita : pecaRetorno.getTodasAsCasas()) {
-									if (!casaGuarita.possuiPeca()) {
-										pecaProxima.mover(casaGuarita);
-									}
-								}
-								castelo.mover(proximaCasa);
-								moved = true; // faz sair do loop, o movimento foi feito
-							}
-							if (castelo.equals(pecaProxima)) {
-								castelo.mover(proximaCasa);
-								moved = true; // faz sair do loop, o movimento foi feito
-							}
-							// caso seja do mesmo jogador, nada acontece
-							else
-								return;
-						}
-						// caso não haja peça na casa de destino
-						// a peça vai até lá
-						else {
-							castelo.mover(proximaCasa); // move a peça
-							moved = true; // faz sair do loop, o movimento foi feito
-						}
-					}
-					// caso a casa de destino seja a casa final
-					// devemos mover a peça até lá
-					// e aumentar o número de peças na casa
-					if (proximaCasa.ehCasaFinal()) {
-						int qtDePecas = proximaCasa.getQuantidadePecas();
-						castelo.mover(proximaCasa);
-						qtDePecas++;
-						proximaCasa.setQuantidadePecas(qtDePecas);
-						// caso haja 4 peças na casa final, o jogador venceu!
-						if (qtDePecas == 4) {
-							// mostra uma caixa de diálogo, mostrando quem venceu
-							showMessageDialog(null, proximaCasa.getCor() + " venceu!");
-							// ativa o gatilho do item do menu Arquivo, Novo, efetivamente reiniciando o
-							// jogo
-							menuNovo.doClick();
-						}
-						moved = true;
-					}
-				} else {
-					// não há próxima casa,
-					// a próxima casa só é nula se:
-					// 1. A peça está na guarita
-					// 2. A peça está na casa final
-					// No caso 1, a peça só sai da guarita se os dados tiverem valores iguais
-					// a peça vai pra casa inicial da sua cor, que é obtida pelo objeto tabulheiro
-					// No caso 2, não há o que fazer, a peça não deve se mecher e o jogo deve
-					// permanecer parado
-
-					if (casa.pertenceGuarita()) { // verifica se a peça está na guarita
-						// verifica se os dados são iguais, para tirar da guarita
-						if (dados[0].getValor() == dados[1].getValor()) {
-							// move a peça para a casa inicial
-
-							// ---NOTA: a peça não deve sair se a casa de início estiver ocupada----
-							proximaCasa = tabuleiro.getCasaInicio(player.getColor());
-
-							// verifica se há uma peça na casa inicial
-							Castelo pecaProxima = proximaCasa.getPeca();
-							if (pecaProxima != null) {
-								// caso não seja do mesmo jogador que estiver saindo, deve-se haver a captura
-								if (!player.isThisPlayer(pecaProxima)) {
-									Guarita pecaRetorno = tabuleiro.getGuarita(pecaProxima.getCor());
-									for (CasaGuarita casaGuarita : pecaRetorno.getTodasAsCasas()) {
-										if (!casaGuarita.possuiPeca()) {
-											pecaProxima.mover(casaGuarita);
-										}
-									}
-									castelo.mover(proximaCasa);
-									moved = true; // faz sair do loop, o movimento foi feito
-								}
-								// caso seja, nada acontece
-								else
-									return;
-							}
-							// caso não haja nenhuma peça, o movimento é normal e a peça sai da guarita
-							else {
-								castelo.mover(proximaCasa); // move a peça
-								moved = true; // faz sair do loop, o movimento foi feito
-							}
-						}
-						// verifica se o jogador pode mover outra peça. Caso positivo o jogo não anda,
-						// caso negativo, ele perde a vez
-						else {
-							for (Castelo pecaDoPlayer : player.getCastelo()) {
-								Casa casaDaPeca = pecaDoPlayer.getCasa();
-								if (!casaDaPeca.pertenceGuarita() && !casaDaPeca.ehCasaFinal())
-									return;
-							}
-							moved = true;
-						}
-					}
-
-					// caso a peça esteja na casa finala, não há nada a se fazer
-					if (casa.ehCasaFinal()) {
-						return;
-					}
-				}
-			}
-
-			// TODO: capture verification
-
-			// TODO: win verfication
-
-			if (proximaCasa.ehCasaFinal()) {
-				if (castelo.getNivel() == 4) {
-					// mostra uma caixa de diálogo, mostrando quem venceu
-					showMessageDialog(null, proximaCasa.getCor() + " venceu!");
-					// ativa o gatilho do item do menu Arquivo, Novo, efetivamente reiniciando o
-					// jogo
-					menuNovo.doClick();
-				}
-			}
+			castelo.mover(proximaCasa);
 
 			// permite que os dados sejam rolados de novo
 			// já que, como a peça já se mecheu, o próximo turno vai começar

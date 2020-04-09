@@ -230,6 +230,7 @@ public abstract class Casa {
         return cor;
     }
 
-    abstract public Casa proximaCasa(Castelo castelo, boolean curupira, Dado[] dados);    
-    abstract public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar);    
+    abstract public Casa proximaCasa(Castelo castelo, boolean curupira, Dado[] dados);
+
+    abstract public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar);
 }

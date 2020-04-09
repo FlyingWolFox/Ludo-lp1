@@ -80,7 +80,8 @@ public class CasaGUI extends JButton {
             // setText(q >= 2 ? q + "" : "");
 
             if (casa.possuiPeca()) {
-                Icon icon = janelaPrincipal.getIconePadrão("CASTELO" + casa.getPeca().getNivel() + casa.getPeca().getCor());
+                Icon icon = janelaPrincipal
+                        .getIconePadrão("CASTELO" + casa.getPeca().getNivel() + casa.getPeca().getCor());
                 setIcon(icon);
             } else if (casa.ehEntradaZonaSegura()) {
                 Icon icon = janelaPrincipal.getIconePadrão("ESTRELA");

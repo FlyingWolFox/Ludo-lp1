@@ -1,4 +1,3 @@
-
 public class CasaEntrada extends Casa {
 
 	private String corDaEntrada;
@@ -23,12 +22,12 @@ public class CasaEntrada extends Casa {
 	}
 
 	public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar) {
-		
+
 		if (this.possuiPeca()) {
 			if (this.getPeca().getNivel() > castelo.getNivel() && this.getPeca().getCor() != castelo.getCor())
 				return super.getCasaAnterior();
 		}
-		
+
 		if (casasAAndar > 0) {
 			if (castelo.getCor() == corDaEntrada) {
 				return super.getCasaSegura().proximaCasa(castelo, curupira, casasAAndar - 1);

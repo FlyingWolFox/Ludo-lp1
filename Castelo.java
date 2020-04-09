@@ -1,4 +1,3 @@
-
 public class Castelo {
 
     // Cor da peça

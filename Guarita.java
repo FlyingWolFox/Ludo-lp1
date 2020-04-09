@@ -20,7 +20,8 @@ public class Guarita {
     public Guarita(String cor, CasaComum casaInicio) {
         this.cor = cor;
         this.casaInicio = casaInicio;
-        this.casas = new CasaGuarita[]{ new CasaGuarita(this), new CasaGuarita(this), new CasaGuarita(this), new CasaGuarita(this) };
+        this.casas = new CasaGuarita[] { new CasaGuarita(this), new CasaGuarita(this), new CasaGuarita(this),
+                new CasaGuarita(this) };
     }
 
     /**

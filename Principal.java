@@ -126,7 +126,7 @@ public class Principal extends JFrame {
         tabuleiroGUI.revalidate();
         if (jogo.getTabuleiro().ehVitoria()) {
             // mostra uma caixa de diálogo, mostrando quem venceu
-            showMessageDialog(null, jogo.getJogadorAnterior() + " venceu!");
+            showMessageDialog(null, jogo.getJogadorDaVez() + " venceu!");
             // ativa o gatilho do item do menu Arquivo, Novo, efetivamente reiniciando o
             // jogo
             menuNovo.doClick();
@@ -214,7 +214,6 @@ public class Principal extends JFrame {
             System.out.println("Não foi possível carregar os arquivos de imagens.");
             return null;
         }
-
     }
 
     /**
