@@ -1,16 +1,19 @@
+
 /**
  * Representa o tabuleiro do jogo.
  * 
  * @author Alan Moraes / alan@ci.ufpb.br
  * @author Victor Koehler / koehlervictor@cc.ci.ufpb.br
  */
+import java.util.ArrayList;
+
 public class Tabuleiro {
 
     // Armazena as casas de início das diferentes cores.
-    private Casa casaInicioAmarelo;
-    private Casa casaInicioAzul;
-    private Casa casaInicioVerde;
-    private Casa casaInicioVermelho;
+    private CasaComum casaInicioAmarelo;
+    private CasaComum casaInicioAzul;
+    private CasaComum casaInicioVerde;
+    private CasaComum casaInicioVermelho;
 
     // Armazena as guaritas do tabuleiro.
     private Guarita guaritaAmarelo;
@@ -18,22 +21,27 @@ public class Tabuleiro {
     private Guarita guaritaVerde;
     private Guarita guaritaVermelho;
 
+    private ArrayList<Casa> casas_finais;
+
     /**
      * Construtor padrão de um tabuleiro.
      */
     public Tabuleiro() {
-        guaritaAmarelo = new Guarita("AMARELO");
-        guaritaAzul = new Guarita("AZUL");
-        guaritaVerde = new Guarita("VERDE");
-        guaritaVermelho = new Guarita("VERMELHO");
-
-        // Inicializamos um tabuleiro de Ludo
 
         // Casas de Inicio
-        casaInicioAmarelo = new Casa("AMARELO");
-        casaInicioAzul = new Casa("AZUL");
-        casaInicioVerde = new Casa("VERDE");
-        casaInicioVermelho = new Casa("VERMELHO");
+        casaInicioAmarelo = new CasaComum("AMARELO");
+        casaInicioAzul = new CasaComum("AZUL");
+        casaInicioVerde = new CasaComum("VERDE");
+        casaInicioVermelho = new CasaComum("VERMELHO");
+
+        guaritaAmarelo = new Guarita("AMARELO", casaInicioAmarelo);
+        guaritaAzul = new Guarita("AZUL", casaInicioAzul);
+        guaritaVerde = new Guarita("VERDE", casaInicioVerde);
+        guaritaVermelho = new Guarita("VERMELHO", casaInicioVermelho);
+
+        casas_finais = new ArrayList<Casa>();
+
+        // Inicializamos um tabuleiro de Ludo
 
         // Casas comuns
         // Usaremos uma espécie de lista encadeada informal para guardar as casas.
@@ -52,15 +60,21 @@ public class Tabuleiro {
     private void popularCasas(Casa primeiraCasa, Casa ultimaCasa) {
         Casa casa = primeiraCasa;
         for (int i = 0; i < 12; i++) {
-            Casa casaSeguinte = new Casa();
+            Casa casaSeguinte = new CasaComum();
             casa.setCasaSeguinte(casaSeguinte);
-            casa = casaSeguinte;
+            casaSeguinte.setCasaAnterior(casa);
 
             if (i == 10) {
+                casaSeguinte = new CasaEntrada(ultimaCasa.getCor());
+                casa.setCasaSeguinte(casaSeguinte);
+                casaSeguinte.setCasaAnterior(casa);
+                casa = casaSeguinte;
                 criarCasasZonaSegura(casa, ultimaCasa.getCor());
             }
+            casa = casaSeguinte;
         }
         casa.setCasaSeguinte(ultimaCasa);
+        ultimaCasa.setCasaAnterior(casa);
     }
 
     /**
@@ -71,13 +85,14 @@ public class Tabuleiro {
      * @param cor
      */
     private void criarCasasZonaSegura(Casa casaEntradaZonaSegura, String cor) {
-        Casa casaZonaSegura = new Casa(cor);
+        Casa casaZonaSegura = new CasaSegura(cor, null);
         casaEntradaZonaSegura.setCasaSegura(casaZonaSegura);
         for (int i = 0; i < 5; i++) {
-            Casa casaNova = new Casa(cor, casaZonaSegura);
+            Casa casaNova = new CasaSegura(cor, casaZonaSegura);
             casaZonaSegura.setCasaSeguinte(casaNova);
             casaZonaSegura = casaNova;
         }
+        casas_finais.add(casaZonaSegura);
     }
 
     /**
@@ -123,4 +138,17 @@ public class Tabuleiro {
         }
     }
 
+    public ArrayList<Casa> getCasasFinais() {
+        return casas_finais;
+    }
+
+    public boolean ehVitoria() {
+        for (Casa casa : casas_finais) {
+            if (casa.possuiPeca()) {
+                if (casa.getPeca().getNivel() == 4)
+                    return true;
+            }
+        }
+        return false;
+    }
 }

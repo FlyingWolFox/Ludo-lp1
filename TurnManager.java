@@ -1,4 +1,3 @@
-
 /**
  * Gerenciador de turnos do jogo
  * 
@@ -21,6 +20,12 @@ public class TurnManager {
      */
     public int getWhoIsNow() {
         return whoIsNow;
+    }
+
+    public int getWhoWasBefore() {
+        if (whoIsNow > 0)
+            return whoIsNow - 1;
+        return 3;
     }
 
     /**

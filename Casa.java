@@ -4,7 +4,7 @@
  * @author Alan Moraes / alan@ci.ufpb.br
  * @author Victor Koehler / koehlervictor@cc.ci.ufpb.br
  */
-public class Casa {
+public abstract class Casa {
 
     // Semelhante as Listas Encadeadas, armazena ou não a casa seguinte, anterior e
     // ou segura.
@@ -16,7 +16,7 @@ public class Casa {
     private Guarita guarita;
 
     // Peça presentes neste casa
-    private Peca peca;
+    private Castelo castelo;
 
     // Quantidade de peças presente na casa (Para casas finais).
     private int qtdePecas;
@@ -60,7 +60,7 @@ public class Casa {
         this.guarita = guarita;
         this.casaSeguinte = null;
         this.casaSegura = null;
-        this.peca = null;
+        this.castelo = null;
         this.qtdePecas = 0;
     }
 
@@ -78,8 +78,8 @@ public class Casa {
      *
      * @return A peça se presente nesta casa ou null caso contrário.
      */
-    public Peca getPeca() {
-        return peca;
+    public Castelo getPeca() {
+        return castelo;
     }
 
     /**
@@ -89,13 +89,13 @@ public class Casa {
      * @return A peça que estava anteriormente nesta casa, ou null caso não houvesse
      *         alguma.
      */
-    public Peca setPeca(Peca peca) {
-        Peca r = getPeca();
-        this.peca = peca;
-        if (peca == null) {
+    public Castelo setCastelo(Castelo castelo) {
+        Castelo r = getPeca();
+        this.castelo = castelo;
+        if (castelo == null) {
             this.qtdePecas = 0;
         } else {
-            this.qtdePecas = 1;
+            this.qtdePecas = castelo.getNivel();
         }
         return r;
     }
@@ -229,4 +229,8 @@ public class Casa {
     public String getCor() {
         return cor;
     }
+
+    abstract public Casa proximaCasa(Castelo castelo, boolean curupira, Dado[] dados);
+
+    abstract public Casa proximaCasa(Castelo castelo, boolean curupira, int casasAAndar);
 }

@@ -8,17 +8,20 @@ import java.util.Arrays;
  * @author Victor Koehler / koehlervictor@cc.ci.ufpb.br
  */
 public class Guarita {
-    private final Casa[] casas;
+    private final CasaGuarita[] casas;
     private final String cor;
+    private final CasaComum casaInicio;
 
     /**
      * Inicializa a guarita vazia.
      * 
      * @param cor Cor
      */
-    public Guarita(String cor) {
+    public Guarita(String cor, CasaComum casaInicio) {
         this.cor = cor;
-        this.casas = new Casa[] { new Casa(this), new Casa(this), new Casa(this), new Casa(this) };
+        this.casaInicio = casaInicio;
+        this.casas = new CasaGuarita[] { new CasaGuarita(this), new CasaGuarita(this), new CasaGuarita(this),
+                new CasaGuarita(this) };
     }
 
     /**
@@ -52,7 +55,7 @@ public class Guarita {
      * 
      * @return Array contendo as casas.
      */
-    public Casa[] getTodasAsCasas() {
+    public CasaGuarita[] getTodasAsCasas() {
         return Arrays.copyOf(casas, casas.length);
     }
 
@@ -61,5 +64,9 @@ public class Guarita {
      */
     public String getCor() {
         return cor;
+    }
+
+    public Casa getCasaInicio() {
+        return casaInicio;
     }
 }

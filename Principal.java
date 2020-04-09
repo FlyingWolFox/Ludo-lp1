@@ -9,6 +9,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+// Para exibir a caixa de diálogo de vitória
+import static javax.swing.JOptionPane.showMessageDialog;
 
 import java.net.URI;
 
@@ -122,6 +124,14 @@ public class Principal extends JFrame {
     private void atualizar() {
         tabuleiroGUI.repaint();
         tabuleiroGUI.revalidate();
+        if (jogo.getTabuleiro().ehVitoria()) {
+            // mostra uma caixa de diálogo, mostrando quem venceu
+            showMessageDialog(null, jogo.getJogadorDaVez() + " venceu!");
+            // ativa o gatilho do item do menu Arquivo, Novo, efetivamente reiniciando o
+            // jogo
+            menuNovo.doClick();
+        }
+
     }
 
     /**
@@ -165,16 +175,28 @@ public class Principal extends JFrame {
 
     private void carregarIconesECores() {
         cores.put("AMARELO", Color.YELLOW);
-        icones.put("AMARELO", carregarIcone("imagens/amarelo.png"));
+        // icones.put("AMARELO", carregarIcone("imagens/amarelo.png"));
+        for (int i = 1; i < 5; i++) {
+            icones.put("CASTELO" + i + "AMARELO", carregarIcone("imagens/castelo" + i + "amarelo.png"));
+        }
 
         cores.put("AZUL", Color.BLUE);
-        icones.put("AZUL", carregarIcone("imagens/azul.png"));
+        // icones.put("AZUL", carregarIcone("imagens/azul.png"));
+        for (int i = 1; i < 5; i++) {
+            icones.put("CASTELO" + i + "AZUL", carregarIcone("imagens/castelo" + i + "azul.png"));
+        }
 
         cores.put("VERDE", Color.GREEN);
-        icones.put("VERDE", carregarIcone("imagens/verde.png"));
+        // icones.put("VERDE", carregarIcone("imagens/verde.png"));
+        for (int i = 1; i < 5; i++) {
+            icones.put("CASTELO" + i + "VERDE", carregarIcone("imagens/castelo" + i + "verde.png"));
+        }
 
         cores.put("VERMELHO", Color.RED);
-        icones.put("VERMELHO", carregarIcone("imagens/vermelho.png"));
+        // icones.put("VERMELHO", carregarIcone("imagens/vermelho.png"));
+        for (int i = 1; i < 5; i++) {
+            icones.put("CASTELO" + i + "VERMELHO", carregarIcone("imagens/castelo" + i + "vermelho.png"));
+        }
 
         icones.put("ESTRELA", carregarIcone("imagens/star.png"));
         for (int i = 0; i < 7; i++) {
@@ -192,7 +214,6 @@ public class Principal extends JFrame {
             System.out.println("Não foi possível carregar os arquivos de imagens.");
             return null;
         }
-
     }
 
     /**

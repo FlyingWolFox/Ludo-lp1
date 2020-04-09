@@ -8,7 +8,8 @@ import java.util.*;
 public class Player {
 
     private int number; // número da vez do jogador, 0 - 3
-    private ArrayList<Peca> pecas; // peças que correspondem ao jogador
+    private ArrayList<Castelo> castelos; // peças que correspondem ao jogador
+    private Guarita guarita;
     private String color; // cor da guarita
 
     /**
@@ -21,9 +22,11 @@ public class Player {
     public Player(int number, Casa[] casaDaGuarita, String color) {
         this.number = number;
         this.color = color;
-        this.pecas = new ArrayList<Peca>();
+        this.guarita = casaDaGuarita[0].getGuarita();
+        this.castelos = new ArrayList<Castelo>();
         for (Casa casa : casaDaGuarita) {
-            this.pecas.add(casa.getPeca());
+            this.castelos.add(casa.getPeca());
+            casa.getPeca().setPlayer(this);
         }
     }
 
@@ -45,17 +48,35 @@ public class Player {
         return color;
     }
 
-    public ArrayList<Peca> getPecas(){
-        return pecas;
+    public ArrayList<Castelo> getCastelo() {
+        return castelos;
     }
 
     /**
      * Verifica se a peça passada pertence ao jogador
      * 
-     * @param peca peça a ser verificada
+     * @param castelo castelo a ser verificada
      * @return true se a peça for do jogador, false caso contrário
      */
-    public boolean isThisPlayer(Peca peca) {
-        return pecas.contains(peca);
+    public boolean isThisPlayer(Castelo castelo) {
+        return this.castelos.contains(castelo);
+    }
+
+    public Casa retornarGuaritaLivre() {
+        for (Casa casa : guarita.getTodasAsCasas()) {
+            if (!casa.possuiPeca())
+                return casa;
+        }
+
+        // shall never be reached
+        return null;
+    }
+
+    public void removerCastelo(Castelo castelo) {
+        castelos.remove(castelo);
+    }
+
+    public void adicionarCastelo(Castelo castelo) {
+        castelos.add(castelo);
     }
 }
